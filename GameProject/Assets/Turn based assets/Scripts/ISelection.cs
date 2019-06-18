@@ -1,9 +1,11 @@
-﻿namespace Turn_based_assets.Scripts
+﻿using UnityEngine;
+
+namespace Turn_based_assets.Scripts
 {
     public interface ISelection
     {
-        void Select();
+        void Select(GameObject selection);
 
-        void DeSelect();
+        void DeSelect(GameObject selection);
     }
 }
