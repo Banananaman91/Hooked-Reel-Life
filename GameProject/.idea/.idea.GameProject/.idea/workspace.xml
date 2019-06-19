@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="229ff202-5331-41e1-9091-89bc1c761640" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Turn based assets/3D models/TileCube.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Turn based assets/3D models/TileCube.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeSelection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeSelection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,27 +22,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="5" lean-forward="true" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+            <state relative-caret-position="90">
+              <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
               <folding>
-                <marker date="1560784370497" expanded="true" signature="35:132" ph="{...}" />
-                <marker date="1560784370497" expanded="true" signature="69:130" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="48" lean-forward="true" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
-              <folding>
-                <marker date="1560788011971" expanded="true" signature="6:46" ph="..." />
-                <marker date="1560788011971" expanded="true" signature="83:427" ph="{...}" />
-                <marker date="1560788011971" expanded="true" signature="151:425" ph="{...}" />
-                <marker date="1560788011971" expanded="true" signature="246:318" ph="{...}" />
-                <marker date="1560788011971" expanded="true" signature="350:419" ph="{...}" />
+                <marker date="1560935215178" expanded="true" signature="55:152" ph="{...}" />
+                <marker date="1560935215178" expanded="true" signature="89:150" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -54,14 +36,32 @@
         <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+              <caret line="19" column="79" selection-start-line="19" selection-start-column="79" selection-end-line="19" selection-end-column="79" />
               <folding>
-                <marker date="1560788187755" expanded="true" signature="6:32" ph="..." />
-                <marker date="1560788187755" expanded="true" signature="69:424" ph="{...}" />
-                <marker date="1560788187755" expanded="true" signature="119:422" ph="{...}" />
-                <marker date="1560788187755" expanded="true" signature="155:416" ph="{...}" />
-                <marker date="1560788187755" expanded="true" signature="211:406" ph="{...}" />
-                <marker date="1560788187755" expanded="true" signature="335:392" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="6:32" ph="..." />
+                <marker date="1560951592011" expanded="true" signature="69:1821" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="119:1819" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="419:655" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="686:1813" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="856:1297" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="1347:1803" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="1446:1664" ph="{...}" />
+                <marker date="1560951592011" expanded="true" signature="1686:1789" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeGrower.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="9" column="66" lean-forward="true" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
+              <folding>
+                <marker date="1560940242795" expanded="false" signature="6:111" ph="..." />
+                <marker date="1560940242795" expanded="true" signature="164:379" ph="{...}" />
+                <marker date="1560940242795" expanded="true" signature="191:270" ph="{...}" />
+                <marker date="1560940242795" expanded="true" signature="298:377" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -70,13 +70,60 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://E:/DeathGame/Assets/Scripts/Interaction/PlayerInteract.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="420">
+              <caret line="28" column="79" lean-forward="true" selection-start-line="28" selection-start-column="79" selection-end-line="28" selection-end-column="79" />
               <folding>
-                <marker date="1553264605848" expanded="true" signature="6:78" ph="..." />
+                <element signature="e#0#78#0" expanded="true" />
                 <marker date="1553264605848" expanded="true" signature="124:1860" ph="{...}" />
                 <marker date="1553264605848" expanded="true" signature="245:1857" ph="{...}" />
                 <marker date="1553264605848" expanded="true" signature="642:1810" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
+              <folding>
+                <marker date="1560936596431" expanded="true" signature="6:46" ph="..." />
+                <marker date="1560936596431" expanded="true" signature="83:452" ph="{...}" />
+                <marker date="1560936596431" expanded="true" signature="151:450" ph="{...}" />
+                <marker date="1560936596431" expanded="true" signature="237:343" ph="{...}" />
+                <marker date="1560936596431" expanded="true" signature="375:444" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/AlternateCubeSelection.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding>
+                <marker date="1560939616923" expanded="true" signature="55:454" ph="{...}" />
+                <marker date="1560939616923" expanded="true" signature="125:452" ph="{...}" />
+                <marker date="1560939616923" expanded="true" signature="217:321" ph="{...}" />
+                <marker date="1560939616923" expanded="true" signature="354:446" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeSelection.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+              <folding>
+                <marker date="1560935215141" expanded="false" signature="6:106" ph="..." />
+                <marker date="1560935215141" expanded="true" signature="143:475" ph="{...}" />
+                <marker date="1560935215141" expanded="true" signature="204:473" ph="{...}" />
+                <marker date="1560935215141" expanded="true" signature="239:342" ph="{...}" />
+                <marker date="1560935215141" expanded="true" signature="375:467" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -91,18 +138,25 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@1.0.8/Rider/Editor/RiderScriptEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/DeathGame/Assets/Scripts/Interaction/IInteract.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://E:/Term 2/Object Orientated Programming/Object Orientated/Assets/Scripts/Rooms/WallGenerator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeSelection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://E:/DeathGame/Assets/Scripts/Dialogue scripts/Dialogue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/DeathGame/Assets/Scripts/Interaction/Interacted.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/AlternateCubeSelection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://E:/DeathGame/Assets/Scripts/Interaction/PlayerInteract.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeGrower.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs" />
         <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/DummySelectionService.cs" />
+        <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeSelection.cs" />
+        <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs" />
         <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs" />
+        <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/AlternateCubeSelection.cs" />
+        <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeGrower.cs" />
         <option value="$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs" />
       </list>
     </option>
@@ -118,39 +172,15 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="SolutionExplorer">
-        <option name="show-all-files" value="false" />
-      </pane>
       <pane id="UnityExplorer">
-        <subPane>
-          <expand>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-            </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-              <item name="Turn based assets" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="8711f2a6:AssetsRoot" />
-              <item name="Turn based assets" type="1045f7f1:UnityExplorerNode" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="" type="e068e287:UnityExplorerRootNode" />
-              <item name="Packages" type="4e2708dd:PackagesRoot" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
       </pane>
-      <pane id="FileSystemExplorer" />
       <pane id="AssemblyExplorer" />
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -183,10 +213,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="9660">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="9660" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -204,11 +234,12 @@
       <workItem from="1560782624736" duration="600000" />
       <workItem from="1560783693515" duration="32000" />
       <workItem from="1560784056428" duration="3498000" />
+      <workItem from="1560931729467" duration="14372000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4130000" />
+    <option name="totallyTimeSpent" value="18502000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -221,8 +252,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1913" y="0" width="1934" height="1047" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25506938" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25773746" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -230,7 +262,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39957264" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -276,30 +308,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/DeathGame/Assets/Scripts/Interaction/IInteract.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@1.0.8/Rider/Editor/RiderScriptEditor.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="5" lean-forward="true" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-          <folding>
-            <marker date="1560784370497" expanded="true" signature="35:132" ph="{...}" />
-            <marker date="1560784370497" expanded="true" signature="69:130" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -315,36 +327,91 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://E:/Term 2/Object Orientated Programming/Object Orientated/Assets/Scripts/Rooms/WallGenerator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#92#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/DeathGame/Assets/Scripts/Interaction/IInteract.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://E:/DeathGame/Assets/Scripts/Dialogue scripts/Dialogue.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="34" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="34" />
+        <state relative-caret-position="840">
+          <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
           <folding>
             <element signature="e#0#133#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/ISelection.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <marker date="1560935215178" expanded="true" signature="55:152" ph="{...}" />
+            <marker date="1560935215178" expanded="true" signature="89:150" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/GridSelectionService.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="48" lean-forward="true" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
+        <state relative-caret-position="165">
+          <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
           <folding>
-            <marker date="1560788011971" expanded="true" signature="6:46" ph="..." />
-            <marker date="1560788011971" expanded="true" signature="83:427" ph="{...}" />
-            <marker date="1560788011971" expanded="true" signature="151:425" ph="{...}" />
-            <marker date="1560788011971" expanded="true" signature="246:318" ph="{...}" />
-            <marker date="1560788011971" expanded="true" signature="350:419" ph="{...}" />
+            <marker date="1560936596431" expanded="true" signature="6:46" ph="..." />
+            <marker date="1560936596431" expanded="true" signature="83:452" ph="{...}" />
+            <marker date="1560936596431" expanded="true" signature="151:450" ph="{...}" />
+            <marker date="1560936596431" expanded="true" signature="237:343" ph="{...}" />
+            <marker date="1560936596431" expanded="true" signature="375:444" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/AlternateCubeSelection.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding>
+            <marker date="1560939616923" expanded="true" signature="55:454" ph="{...}" />
+            <marker date="1560939616923" expanded="true" signature="125:452" ph="{...}" />
+            <marker date="1560939616923" expanded="true" signature="217:321" ph="{...}" />
+            <marker date="1560939616923" expanded="true" signature="354:446" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeGrower.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="9" column="66" lean-forward="true" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
+          <folding>
+            <marker date="1560940242795" expanded="false" signature="6:111" ph="..." />
+            <marker date="1560940242795" expanded="true" signature="164:379" ph="{...}" />
+            <marker date="1560940242795" expanded="true" signature="191:270" ph="{...}" />
+            <marker date="1560940242795" expanded="true" signature="298:377" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://E:/DeathGame/Assets/Scripts/Interaction/PlayerInteract.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state relative-caret-position="420">
+          <caret line="28" column="79" lean-forward="true" selection-start-line="28" selection-start-column="79" selection-end-line="28" selection-end-column="79" />
           <folding>
-            <marker date="1553264605848" expanded="true" signature="6:78" ph="..." />
+            <element signature="e#0#78#0" expanded="true" />
             <marker date="1553264605848" expanded="true" signature="124:1860" ph="{...}" />
             <marker date="1553264605848" expanded="true" signature="245:1857" ph="{...}" />
             <marker date="1553264605848" expanded="true" signature="642:1810" ph="{...}" />
@@ -352,17 +419,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/CubeSelection.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding>
+            <marker date="1560935215141" expanded="false" signature="6:106" ph="..." />
+            <marker date="1560935215141" expanded="true" signature="143:475" ph="{...}" />
+            <marker date="1560935215141" expanded="true" signature="204:473" ph="{...}" />
+            <marker date="1560935215141" expanded="true" signature="239:342" ph="{...}" />
+            <marker date="1560935215141" expanded="true" signature="375:467" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Turn based assets/Scripts/MouseSelection.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <caret line="19" column="79" selection-start-line="19" selection-start-column="79" selection-end-line="19" selection-end-column="79" />
           <folding>
-            <marker date="1560788187755" expanded="true" signature="6:32" ph="..." />
-            <marker date="1560788187755" expanded="true" signature="69:424" ph="{...}" />
-            <marker date="1560788187755" expanded="true" signature="119:422" ph="{...}" />
-            <marker date="1560788187755" expanded="true" signature="155:416" ph="{...}" />
-            <marker date="1560788187755" expanded="true" signature="211:406" ph="{...}" />
-            <marker date="1560788187755" expanded="true" signature="335:392" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="6:32" ph="..." />
+            <marker date="1560951592011" expanded="true" signature="69:1821" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="119:1819" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="419:655" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="686:1813" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="856:1297" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="1347:1803" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="1446:1664" ph="{...}" />
+            <marker date="1560951592011" expanded="true" signature="1686:1789" ph="{...}" />
           </folding>
         </state>
       </provider>

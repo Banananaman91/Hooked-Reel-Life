@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 
 namespace Turn_based_assets.Scripts
 {
-    public class CubeSelection : MonoBehaviour, ISelection
+    public class AlternateCubeSelection : MonoBehaviour, ISelection
     {
+        // Start is called before the first frame update
         public void Select()
         {
             
-            this.GetComponent<Renderer>().material.color = Color.red;
+            this.GetComponent<Renderer>().material.color = Color.blue;
         }
 
 
@@ -20,4 +18,3 @@ namespace Turn_based_assets.Scripts
         }
     }
 }
-

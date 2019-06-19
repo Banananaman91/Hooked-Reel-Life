@@ -4,8 +4,8 @@ namespace Turn_based_assets.Scripts
 {
     public interface ISelection
     {
-        void Select(GameObject selection);
+        void Select();
 
-        void DeSelect(GameObject selection);
+        void DeSelect();
     }
 }

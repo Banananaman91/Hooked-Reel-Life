@@ -6,12 +6,13 @@ namespace Turn_based_assets.Scripts
     public class GridSelectionService : MonoBehaviour, ISelection
     {
         [SerializeField] private Tilemap tileGrid;
-        public void Select(GameObject selection)
+        public void Select()
         {
+            Debug.Log("HitGrid");
             tileGrid.SetColor(default, Color.blue);
         }
 
-        public void DeSelect(GameObject selection)
+        public void DeSelect()
         {
             tileGrid.SetColor(default, default);
         }

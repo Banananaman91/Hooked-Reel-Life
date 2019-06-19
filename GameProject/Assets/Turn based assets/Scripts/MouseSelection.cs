@@ -5,26 +5,54 @@ namespace Turn_based_assets.Scripts
 {
     public class MouseSelection : MonoBehaviour
     {
-        private ISelection _selectionResponse;
-        private GameObject _selection;
+        private ISelection _selection;
+        [SerializeField] private GameObject cube;
+        public float distanceY;
+        public float offset;
+        public float gridSize;
+        private Plane _plane;
+        private Vector3 distanceFromCamera;
+        
 
-        private void Awake()
+        private void Start()
         {
-            _selectionResponse = GetComponent<ISelection>();
+            var position = Camera.main.transform.position;
+            distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
+            _plane = new Plane(Vector3.up, distanceFromCamera);
         }
 
-        
         private void Update()
         {
-            if(Input.GetButtonDown("Fire1"))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            float gridSpace = 0;
+
+            if (_plane.Raycast(ray, out gridSpace))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Vector3 gridPoint = ray.GetPoint(gridSpace);
+                gridPoint -= Vector3.one * offset;
+                gridPoint /= gridSize;
+                gridPoint = new Vector3(Mathf.Round(gridPoint.x), Mathf.Round(gridPoint.y), Mathf.Round(gridPoint.z));
+                gridPoint *= gridSize;
+                gridPoint += Vector3.one * offset;
+                cube.transform.position = gridPoint;
+            }
+
+            if(Input.GetKeyDown(KeyCode.Mouse0))
+            {
+
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Debug.Log("Hit cube");
-                    _selectionResponse.Select(hit.transform.gameObject);
+                    if (_selection != null) _selection.DeSelect();
+                    _selection = hit.collider.GetComponent<ISelection>();
+                    _selection.Select();
+                }
+
+                else
+                {
+                    if (_selection != null) _selection.DeSelect();
                 }
             }
         }

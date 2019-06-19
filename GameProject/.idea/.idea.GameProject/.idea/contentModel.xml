@@ -8,6 +8,9 @@
       <e p="Assets" t="Include">
         <e p="Turn based assets" t="Include">
           <e p="Scripts" t="Include">
+            <e p="AlternateCubeSelection.cs" t="Include" />
+            <e p="CubeGrower.cs" t="Include" />
+            <e p="CubeSelection.cs" t="Include" />
             <e p="GridSelectionService.cs" t="Include" />
             <e p="ISelection.cs" t="Include" />
             <e p="MouseSelection.cs" t="Include" />
