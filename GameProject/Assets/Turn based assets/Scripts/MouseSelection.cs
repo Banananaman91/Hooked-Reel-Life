@@ -35,21 +35,21 @@ namespace Turn_based_assets.Scripts
                 gridPoint = new Vector3(Mathf.Round(gridPoint.x), Mathf.Round(gridPoint.y), Mathf.Round(gridPoint.z));
                 gridPoint *= gridSize;
                 gridPoint += Vector3.one * offset;
-                cube.transform.position = gridPoint;
+                if (cube != null) cube.transform.position = gridPoint;
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
             {
-
                 RaycastHit hit;
-
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (_selection != null) _selection.DeSelect();
-                    _selection = hit.collider.GetComponent<ISelection>();
-                    _selection.Select();
+                    if (hit.collider.GetComponent<ISelection>() != null)
+                    {
+                        if (_selection != null) _selection.DeSelect();
+                        _selection = hit.collider.GetComponent<ISelection>();
+                        _selection.Select();
+                    }
                 }
-
                 else
                 {
                     if (_selection != null) _selection.DeSelect();
