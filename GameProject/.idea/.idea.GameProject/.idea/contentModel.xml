@@ -14,6 +14,7 @@
             <e p="GridSelectionService.cs" t="Include" />
             <e p="ISelection.cs" t="Include" />
             <e p="MouseSelection.cs" t="Include" />
+            <e p="RotateCube.cs" t="Include" />
             <e p="TileGenerator.cs" t="Include" />
           </e>
         </e>

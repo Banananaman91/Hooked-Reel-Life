@@ -7,7 +7,6 @@ namespace Turn_based_assets.Scripts
         // Start is called before the first frame update
         public void Select()
         {
-            
             this.GetComponent<Renderer>().material.color = Color.blue;
         }
 

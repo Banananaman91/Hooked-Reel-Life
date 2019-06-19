@@ -9,7 +9,6 @@ namespace Turn_based_assets.Scripts
     {
         public void Select()
         {
-            
             this.GetComponent<Renderer>().material.color = Color.red;
         }
 
