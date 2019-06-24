@@ -4,10 +4,8 @@ namespace TurnBasedAssets.Scripts
 {
     public class RotateCube : MonoBehaviour, ISelection
     {
-        public void Select()
-        {
-            MoveCube();
-        }
+        public void Select() => MoveCube();
+        
 
         public void DeSelect()
         {
@@ -16,7 +14,7 @@ namespace TurnBasedAssets.Scripts
 
         public void MoveCube()
         {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 5);
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5);
         }
     }
 }

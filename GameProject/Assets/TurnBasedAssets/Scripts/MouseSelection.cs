@@ -5,11 +5,11 @@ namespace TurnBasedAssets.Scripts
     public class MouseSelection : MonoBehaviour
     {
         private ISelection _selection;
-        [SerializeField] GameObject cube;
-        [SerializeField] float distanceY;
-        [SerializeField] float offset;
-        [SerializeField] float gridSize;
-        [SerializeField] Camera camera;
+        [SerializeField] public GameObject cube;
+        [SerializeField] public float distanceY;
+        [SerializeField] public float offset;
+        [SerializeField] public float gridSize;
+        [SerializeField] public Camera camera;
         private Plane _plane;
         private Vector3 _distanceFromCamera;
         
@@ -27,13 +27,13 @@ namespace TurnBasedAssets.Scripts
 
             if (_plane.Raycast(ray, out float gridSpace))
             {
-                Vector3 gridPoint = ray.GetPoint(gridSpace);
-                gridPoint -= Vector3.one * offset;
-                gridPoint /= gridSize;
-                gridPoint = new Vector3(Mathf.Round(gridPoint.x), Mathf.Round(gridPoint.y), Mathf.Round(gridPoint.z));
-                gridPoint *= gridSize;
-                gridPoint += Vector3.one * offset;
-                if (cube != null) cube.transform.position = gridPoint;
+                Vector3 rawGridPoint = ray.GetPoint(gridSpace);
+                rawGridPoint -= Vector3.one * offset;
+                rawGridPoint /= gridSize;
+                rawGridPoint = new Vector3(Mathf.Round(rawGridPoint.x), Mathf.Round(rawGridPoint.y), Mathf.Round(rawGridPoint.z));
+                rawGridPoint *= gridSize;
+                rawGridPoint += Vector3.one * offset;
+                if (cube != null) cube.transform.position = rawGridPoint;
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
@@ -48,7 +48,10 @@ namespace TurnBasedAssets.Scripts
                         _selection.Select();
                     }
                 }
-                else if (_selection != null) _selection.DeSelect();
+                else if (_selection != null)
+                {
+                    _selection.DeSelect();
+                }
                 
             }
         }

@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class CubeGrower : MonoBehaviour, ISelection
 {
-    [SerializeField] private Transform cubeSize;
-    [SerializeField] private const int size = 3;
+    [SerializeField] private Transform _cubeSize;
+    [SerializeField] private int _size;
     public void Select()
     {
-        cubeSize.localScale = this.transform.localScale * size;
+        _cubeSize.localScale = this.transform.localScale * _size;
     }
 
     public void DeSelect()
     {
-        cubeSize.localScale = this.transform.localScale / size;
+        _cubeSize.localScale = this.transform.localScale / _size;
     }
 }

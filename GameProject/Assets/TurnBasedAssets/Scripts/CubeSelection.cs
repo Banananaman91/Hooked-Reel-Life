@@ -4,16 +4,16 @@ namespace TurnBasedAssets.Scripts
 {
     public class CubeSelection : MonoBehaviour, ISelection
     {
-        [SerializeField] private Renderer cubeRender;
+        [SerializeField] private Renderer _cubeRender;
         public void Select()
         {
-            cubeRender.material.color = Color.red;
+            _cubeRender.material.color = Color.red;
         }
 
 
         public void DeSelect()
         {
-            cubeRender.material.color = Color.white;
+            _cubeRender.material.color = Color.white;
         }
     }
 }
