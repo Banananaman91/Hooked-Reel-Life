@@ -7,80 +7,76 @@ namespace Turn_based_assets.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private GameObject moveTilePrefab;
+        [SerializeField] private GameObject _moveTilePrefab;
 
         public Vector3 currentPos;
-        private List<Vector3> possibleMoves = new List<Vector3>();
-        private List<GameObject> moveTiles = new List<GameObject>();
-
-        private MouseSelection mouseSelection;
-
-        private bool findPossibleMoves;
+        private List<Vector3> _possibleMoves = new List<Vector3>();
+        private List<GameObject> _moveTiles = new List<GameObject>();
+        private float _minDist = Mathf.Infinity;
+        private MouseSelection _mouseSelection;
+        private Vector3 _newPosition;
+        [SerializeField] private int maxDistance;
 
 
         private void Start()
         {
-            currentPos = new Vector3(0, 0, 0);
-            transform.position = currentPos;
-
-            findPossibleMoves = true;
-
-            // Only needed for YeetThePlayer()
-            if(FindObjectOfType<MouseSelection>() != null)
-            {
-                mouseSelection = FindObjectOfType<MouseSelection>();
-            }
+            currentPos = transform.position;
         }
 
 
         private void Update()
         {
-            if(findPossibleMoves)
-                FindPossibleMovePositions();
+//            if(_findPossibleMoves)
+//                FindPossibleMovePositions();
         }
         
 
-        public void MovePlayer()
+        public void MovePlayer(Vector3 rawGridPoint)
         {
-            transform.position = new Vector3(currentPos.x, currentPos.y + 1, currentPos.z);
-
-            findPossibleMoves = true;
+            foreach (var possibleMoves in _possibleMoves )
+            {
+                float distance = Vector3.Distance(possibleMoves, rawGridPoint);
+                if (distance < _minDist)
+                {
+                    _newPosition = possibleMoves;
+                    _minDist = distance;
+                }
+            }
+            
+            Vector3.MoveTowards(transform.position, _newPosition, _minDist);
         }
-
-
-        private void FindPossibleMovePositions()
+        
+        public void FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             // Reset move options
-            possibleMoves.Clear();
+            _possibleMoves.Clear();
 
-            foreach(GameObject tile in moveTiles)
+            foreach(GameObject tile in _moveTiles)
             {
                 Destroy(tile);
             }
 
-            moveTiles.Clear();
+            _moveTiles.Clear();
+            Vector3 route = (currentPos + rawGridPoint).normalized;
 
-            // Find new move options
-            possibleMoves.Add(currentPos + Vector3.forward);
-            possibleMoves.Add(currentPos + Vector3.right);
-            possibleMoves.Add(currentPos + Vector3.back);
-            possibleMoves.Add(currentPos + Vector3.left);
+            _possibleMoves.Add(currentPos + route);
 
-            foreach (Vector3 newTilePos in possibleMoves)
+            foreach (Vector3 newTilePos in _possibleMoves)
             {
-                GameObject newTile = Instantiate(moveTilePrefab, newTilePos, Quaternion.identity);
-                moveTiles.Add(newTile);
+                GameObject newTile = Instantiate(_moveTilePrefab, newTilePos, Quaternion.identity);
+                _moveTiles.Add(newTile);
             }
-
-            findPossibleMoves = false;
         }
 
 
         // Purely for fun
         private void YeetThePlayer()
         {
-            currentPos = mouseSelection.rawGridPoint;
-            transform.position = Vector3.MoveTowards(transform.position, currentPos, 1); // Y E E T
+            if (_mouseSelection != null)
+            {
+                currentPos = _mouseSelection.rawGridPoint;
+                transform.position = Vector3.MoveTowards(transform.position, currentPos, 1); // Y E E T
+            }
         }
     }
 }

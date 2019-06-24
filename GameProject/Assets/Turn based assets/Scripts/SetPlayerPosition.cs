@@ -12,15 +12,15 @@ namespace Turn_based_assets.Scripts
 
             if(playerControler != null)
             {
-                playerControler.currentPos = this.transform.position;
-                playerControler.MovePlayer();
+                playerControler.currentPos = transform.position;
+                //playerControler.MovePlayer();
             }
         }
 
 
         public void DeSelect()
         {
-
+            
         }
     }
 }

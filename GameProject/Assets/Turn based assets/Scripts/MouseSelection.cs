@@ -6,7 +6,7 @@ namespace Turn_based_assets.Scripts
     public class MouseSelection : MonoBehaviour
     {
         private ISelection _selection;
-        [SerializeField] private GameObject player;
+        [SerializeField] private PlayerController player;
         public Vector3 rawGridPoint;
         public float distanceY;
         public float offset;
@@ -36,7 +36,8 @@ namespace Turn_based_assets.Scripts
                 rawGridPoint = new Vector3(Mathf.Round(rawGridPoint.x), Mathf.Round(rawGridPoint.y), Mathf.Round(rawGridPoint.z));
                 rawGridPoint *= gridSize;
                 rawGridPoint += Vector3.one * offset;
-
+                player.FindPossibleMovePositions(rawGridPoint);
+                if(Input.GetKeyDown(KeyCode.Mouse0)) player.MovePlayer(rawGridPoint);
                 //if (player != null) player.transform.position = rawGridPoint;
             }
 
