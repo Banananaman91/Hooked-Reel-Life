@@ -1,33 +1,31 @@
-using System;
 using UnityEngine;
 
-namespace Turn_based_assets.Scripts
+namespace TurnBasedAssets.Scripts
 {
     public class MouseSelection : MonoBehaviour
     {
         private ISelection _selection;
-        [SerializeField] private GameObject cube;
-        public float distanceY;
-        public float offset;
-        public float gridSize;
+        [SerializeField] GameObject cube;
+        [SerializeField] float distanceY;
+        [SerializeField] float offset;
+        [SerializeField] float gridSize;
+        [SerializeField] Camera camera;
         private Plane _plane;
-        private Vector3 distanceFromCamera;
+        private Vector3 _distanceFromCamera;
         
 
         private void Start()
         {
-            var position = Camera.main.transform.position;
-            distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
-            _plane = new Plane(Vector3.up, distanceFromCamera);
+            var position = camera.transform.position;
+            _distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
+            _plane = new Plane(Vector3.up, _distanceFromCamera);
         }
 
         private void Update()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
-            float gridSpace = 0;
-
-            if (_plane.Raycast(ray, out gridSpace))
+            if (_plane.Raycast(ray, out float gridSpace))
             {
                 Vector3 gridPoint = ray.GetPoint(gridSpace);
                 gridPoint -= Vector3.one * offset;
@@ -40,20 +38,18 @@ namespace Turn_based_assets.Scripts
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
             {
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out var hit))
                 {
-                    if (hit.collider.GetComponent<ISelection>() != null)
+                    var selection = hit.collider.GetComponent<ISelection>();
+                    if (selection != null)
                     {
                         if (_selection != null) _selection.DeSelect();
-                        _selection = hit.collider.GetComponent<ISelection>();
+                        _selection = selection;
                         _selection.Select();
                     }
                 }
-                else
-                {
-                    if (_selection != null) _selection.DeSelect();
-                }
+                else if (_selection != null) _selection.DeSelect();
+                
             }
         }
     }
