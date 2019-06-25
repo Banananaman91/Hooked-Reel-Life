@@ -76,6 +76,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
                     }
                 }
             }
+            Debug.Log(openList);
         }
     }
 }
