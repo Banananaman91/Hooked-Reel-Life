@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Turn_based_assets.Scripts
+﻿namespace TurnBasedAssets.Scripts.Interface
 {
     public interface ISelection
     {

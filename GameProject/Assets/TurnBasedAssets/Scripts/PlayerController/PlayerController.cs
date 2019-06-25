@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TurnBasedAssets.Scripts.MouseController;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-namespace Turn_based_assets.Scripts
+namespace TurnBasedAssets.Scripts.PlayerController
 {
     public class PlayerController : MonoBehaviour
     {

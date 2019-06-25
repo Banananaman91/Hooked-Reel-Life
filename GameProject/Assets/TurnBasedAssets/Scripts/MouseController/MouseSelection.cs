@@ -1,12 +1,12 @@
-using System;
+using TurnBasedAssets.Scripts.Interface;
 using UnityEngine;
 
-namespace Turn_based_assets.Scripts
+namespace TurnBasedAssets.Scripts.MouseController
 {
     public class MouseSelection : MonoBehaviour
     {
         private ISelection _selection;
-        [SerializeField] private PlayerController player;
+        [SerializeField] private PlayerController.PlayerController player;
         public Vector3 rawGridPoint;
         public float distanceY;
         public float offset;

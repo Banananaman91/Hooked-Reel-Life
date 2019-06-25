@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TurnBasedAssets.Scripts.Interface;
 using UnityEngine;
 
-namespace Turn_based_assets.Scripts
+namespace TurnBasedAssets.Scripts.PlayerController
 {
     public class SetPlayerPosition : MonoBehaviour, ISelection
     {
