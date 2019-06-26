@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 
-namespace Turn_based_assets.Scripts
+namespace TurnBasedAssets.Scripts
 {
     public class AlternateCubeSelection : MonoBehaviour, ISelection
     {
+        [SerializeField] private Renderer _boxRender;
         // Start is called before the first frame update
         public void Select()
         {
-            
-            this.GetComponent<Renderer>().material.color = Color.blue;
+            _boxRender.material.color = Color.blue;
         }
 
 
         public void DeSelect()
         {
-            this.GetComponent<Renderer>().material.color = Color.white;
+            _boxRender.material.color = Color.white;
         }
     }
 }
