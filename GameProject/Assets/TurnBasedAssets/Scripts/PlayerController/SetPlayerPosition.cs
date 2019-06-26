@@ -1,5 +1,4 @@
-﻿using TurnBasedAssets.Scripts.Interface;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PlayerController
 {

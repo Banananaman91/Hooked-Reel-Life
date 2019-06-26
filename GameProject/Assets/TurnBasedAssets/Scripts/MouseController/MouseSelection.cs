@@ -1,4 +1,3 @@
-using TurnBasedAssets.Scripts.Interface;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.MouseController

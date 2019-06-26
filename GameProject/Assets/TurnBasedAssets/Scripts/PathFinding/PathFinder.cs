@@ -4,34 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace TurnBasedAssets.Scripts.PathFinding
 {
     public class PathFinder : MonoBehaviour
     {
-        class Location
+        public class Location
         {
             public Location Parent { get; set; }
             public Vector3 Position { get; }
             public float G => Parent?.G + 1 ?? 0;
             public float H;
             public float F => G + H;
-            public List<Location> adjacentSquares;
+            
 
             public Location(Vector3 position, Vector3 destination, Location parent = null)
             {
                 Parent = parent;
                 Position = position;
                 H = Vector3.Distance(position, destination);
-                adjacentSquares = new List<Location>()
-                {
-                    new Location(Position + Vector3.forward, destination, this),
-                    new Location(Position + Vector3.back, destination, this),
-                    new Location(Position + Vector3.left, destination, this),
-                    new Location(Position + Vector3.right, destination, this)
-                };
             }
         }
+        
+        public List<Location> adjacentSquares;
 
         public void FindPath(Vector3 startPosition, Vector3 targetPosition)
         {
@@ -57,8 +53,14 @@ namespace TurnBasedAssets.Scripts.PathFinding
                     break;
                 }
 
-
-                foreach (var aSquare in current.adjacentSquares)
+                adjacentSquares = new List<Location>()
+                {
+                    new Location(currentPosition.Position + Vector3.forward, targetPosition, currentPosition),
+                    new Location(currentPosition.Position + Vector3.back, targetPosition, currentPosition),
+                    new Location(currentPosition.Position + Vector3.left, targetPosition, currentPosition),
+                    new Location(currentPosition.Position + Vector3.right, targetPosition, currentPosition)
+                };
+                foreach (var aSquare in adjacentSquares)
                 {
                     if (closedList.Contains(aSquare))
                     {
