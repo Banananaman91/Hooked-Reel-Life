@@ -26,26 +26,24 @@ namespace TurnBasedAssets.Scripts.PathFinding
                 H = Vector3.Distance(position, destination);
             }
         }
-        
-        public List<Location> adjacentSquares;
-
         public void FindPath(Vector3 startPosition, Vector3 targetPosition)
         {
-            Location current = null;
+            Location current;
             var start = new Location(startPosition, targetPosition);
             var target = new Location(targetPosition, startPosition);
             var openList = new List<Location>();
             var closedList = new List<Location>();
+            var adjacentSquares = new List<Location>();
             var squareWithLowestFScore = start;
 
 
             openList.Add(start);
             while (openList.Count > 0)
             {
-                var currentPosition = squareWithLowestFScore;
+                current = squareWithLowestFScore;
 
-                closedList.Add(currentPosition);
-                openList.Remove(currentPosition);
+                closedList.Add(current);
+                openList.Remove(current);
 
                 if (closedList.Contains(target))
                 {
@@ -53,13 +51,17 @@ namespace TurnBasedAssets.Scripts.PathFinding
                     break;
                 }
 
-                adjacentSquares = new List<Location>()
+                while (adjacentSquares.Count >= 4)
                 {
-                    new Location(currentPosition.Position + Vector3.forward, targetPosition, currentPosition),
-                    new Location(currentPosition.Position + Vector3.back, targetPosition, currentPosition),
-                    new Location(currentPosition.Position + Vector3.left, targetPosition, currentPosition),
-                    new Location(currentPosition.Position + Vector3.right, targetPosition, currentPosition)
-                };
+                    adjacentSquares = new List<Location>()
+                    {
+                        new Location(current.Position + Vector3.forward, targetPosition, current),
+                        new Location(current.Position + Vector3.back, targetPosition, current),
+                        new Location(current.Position + Vector3.left, targetPosition, current),
+                        new Location(current.Position + Vector3.right, targetPosition, current)
+                    };
+                }
+
                 foreach (var aSquare in adjacentSquares)
                 {
                     if (closedList.Contains(aSquare))

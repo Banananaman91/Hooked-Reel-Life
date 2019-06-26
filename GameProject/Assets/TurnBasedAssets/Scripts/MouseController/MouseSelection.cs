@@ -12,6 +12,7 @@ namespace TurnBasedAssets.Scripts.MouseController
         public float gridSize;
         public Plane _plane;
         private Vector3 distanceFromCamera;
+        private Vector3 _previousGridPoint;
         
 
         private void Start()
@@ -35,7 +36,12 @@ namespace TurnBasedAssets.Scripts.MouseController
                 rawGridPoint = new Vector3(Mathf.Round(rawGridPoint.x), Mathf.Round(rawGridPoint.y), Mathf.Round(rawGridPoint.z));
                 rawGridPoint *= gridSize;
                 rawGridPoint += Vector3.one * offset;
-                player.FindPossibleMovePositions(rawGridPoint);
+                if (_previousGridPoint != rawGridPoint)
+                {
+                    player.FindPossibleMovePositions(rawGridPoint);
+                    _previousGridPoint = rawGridPoint;
+                }
+                
                 if(Input.GetKeyDown(KeyCode.Mouse0)) player.MovePlayer(rawGridPoint);
                 //if (player != null) player.transform.position = rawGridPoint;
             }
