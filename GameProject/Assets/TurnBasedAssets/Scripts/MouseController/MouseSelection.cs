@@ -36,13 +36,24 @@ namespace TurnBasedAssets.Scripts.MouseController
                 rawGridPoint = new Vector3(Mathf.Round(rawGridPoint.x), Mathf.Round(rawGridPoint.y), Mathf.Round(rawGridPoint.z));
                 rawGridPoint *= gridSize;
                 rawGridPoint += Vector3.one * offset;
-                if (_previousGridPoint != rawGridPoint)
+
+                //if (_previousGridPoint != rawGridPoint)
+                //{
+                //    player.FindPossibleMovePositions(rawGridPoint);
+                //    _previousGridPoint = rawGridPoint;
+                //}
+
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    player.FindPossibleMovePositions(rawGridPoint);
-                    _previousGridPoint = rawGridPoint;
+                    if (_previousGridPoint != rawGridPoint)
+                    {
+                        player.FindPossibleMovePositions(rawGridPoint);
+                        _previousGridPoint = rawGridPoint;
+                    }
+
+                    player.MovePlayer(rawGridPoint);
                 }
-                
-                if(Input.GetKeyDown(KeyCode.Mouse0)) player.MovePlayer(rawGridPoint);
+
                 //if (player != null) player.transform.position = rawGridPoint;
             }
 

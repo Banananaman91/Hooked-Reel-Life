@@ -7,11 +7,14 @@ namespace TurnBasedAssets.Scripts.PlayerController
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private GameObject _moveTilePrefab;
+        //[SerializeField] private GameObject _moveTilePrefab;
+
         [SerializeField] private PathFinder _findPath;
         public Vector3 currentPos;
         private List<Vector3> _possibleMoves = new List<Vector3>();
-        private List<GameObject> _moveTiles = new List<GameObject>();
+
+        //private List<GameObject> _moveTiles = new List<GameObject>();
+
         private float _minDist = Mathf.Infinity;
         private MouseSelection _mouseSelection;
         private Vector3 _newPosition;
@@ -26,10 +29,10 @@ namespace TurnBasedAssets.Scripts.PlayerController
 
         private void Update()
         {
-//            if(_findPossibleMoves)
-//                FindPossibleMovePositions();
+            //if (_findPossibleMoves)
+            //    FindPossibleMovePositions();
         }
-        
+
 
         public void MovePlayer(Vector3 rawGridPoint)
         {
@@ -49,25 +52,25 @@ namespace TurnBasedAssets.Scripts.PlayerController
         public void FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             _findPath.FindPath(transform.position, rawGridPoint);
-            
-            // Reset move options
-//            _possibleMoves.Clear();
-//
-//            foreach(GameObject tile in _moveTiles)
-//            {
-//                Destroy(tile);
-//            }
-//
-//            _moveTiles.Clear();
-//            Vector3 route = (currentPos + rawGridPoint).normalized;
-//
-//            _possibleMoves.Add(currentPos + route);
-//
-//            foreach (Vector3 newTilePos in _possibleMoves)
-//            {
-//                GameObject newTile = Instantiate(_moveTilePrefab, newTilePos, Quaternion.identity);
-//                _moveTiles.Add(newTile);
-//            }
+
+            //// Reset move options
+            //_possibleMoves.Clear();
+
+            //foreach (GameObject tile in _moveTiles)
+            //{
+            //    Destroy(tile);
+            //}
+
+            //_moveTiles.Clear();
+            //Vector3 route = (currentPos + rawGridPoint).normalized;
+
+            //_possibleMoves.Add(currentPos + route);
+
+            //foreach (Vector3 newTilePos in _possibleMoves)
+            //{
+            //    GameObject newTile = Instantiate(_moveTilePrefab, newTilePos, Quaternion.identity);
+            //    _moveTiles.Add(newTile);
+            //}
         }
 
 
