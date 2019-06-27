@@ -12,14 +12,18 @@ namespace TurnBasedAssets.Scripts.PathFinding
     {
         public class Location
         {
-            public Location Parent { get; set; }
-            public Vector3 Position { get; }
+            //public Location Parent { get; set; }
+            //public Vector3 Position { get; }
+
+            public Location Parent;
+            public Vector3 Position;
+
             public float G => Parent?.G + 1 ?? 0;
             public float H;
             public float F => Mathf.Round(G + H);
             
 
-            public Location(Vector3 position, Vector3 destination, Location parent = null)
+            public Location(Vector3 position, Vector3 destination, Location parent)
             {
                 Parent = parent;
                 Position = position;
@@ -28,52 +32,60 @@ namespace TurnBasedAssets.Scripts.PathFinding
         }
         public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition)
         {
-            Location current;
-            Location start = new Location(startPosition, targetPosition);
-            Location target = null;
+            Location currentLocation;
+            Location startLocation = new Location(startPosition, targetPosition, null);
+            //Location targetLocation = null;
+
             var openList = new List<Location>();
             var closedList = new List<Location>();
             var adjacentSquares = new List<Location>();
-            Location squareWithLowestFScore = start;
-            Location previousSquare = null;
-            Debug.Log("FindPath");
-            openList.Add(start);
+
+            Location squareWithLowestFScore = startLocation;
+            //Location previousSquare = null;
+
+            Debug.Log("Started FindPath");
+            Debug.Log("Start location: " + startLocation.Position);
+            Debug.Log("Target pos: " + targetPosition);
+
+            openList.Add(startLocation);
 
             while (openList.Count > 0)
             {
-                current = squareWithLowestFScore;
+                currentLocation = squareWithLowestFScore;
 
-                closedList.Add(current);
-                openList.Remove(current);
+                closedList.Add(currentLocation);
+                openList.Remove(currentLocation);
 
                 if (closedList.Any(x => x.Position == targetPosition))
                 {
-                    Debug.Log("PathFound!");
+                    Debug.Log("PATH FOUND!");
                     break;
                 }
                 
                 adjacentSquares.Clear();
-                adjacentSquares.Add(new Location(current.Position + Vector3.forward, targetPosition, current));
-                adjacentSquares.Add(new Location(current.Position + Vector3.back, targetPosition, current));
-                adjacentSquares.Add(new Location(current.Position + Vector3.left, targetPosition, current));
-                adjacentSquares.Add(new Location(current.Position + Vector3.right, targetPosition, current));
+                adjacentSquares.Add(new Location(currentLocation.Position + Vector3.forward, targetPosition, currentLocation));
+                adjacentSquares.Add(new Location(currentLocation.Position + Vector3.back, targetPosition, currentLocation));
+                adjacentSquares.Add(new Location(currentLocation.Position + Vector3.left, targetPosition, currentLocation));
+                adjacentSquares.Add(new Location(currentLocation.Position + Vector3.right, targetPosition, currentLocation));
 
 
-                foreach (var aSquare in adjacentSquares)
+                foreach (var adjacentSquare in adjacentSquares)
                 {
-                    if (closedList.Any(x => x.Position == aSquare.Position))
+                    Debug.Log(adjacentSquare.F);
+
+                    if (closedList.Any(x => x.Position == adjacentSquare.Position)) // If the adjacentSqaure is in the closedList
                     {
                         continue;
                     }
 
-                    if (openList.All(x => x.Position != aSquare.Position))
+                    if (openList.All(x => x.Position != adjacentSquare.Position)) // If the adjacentSquare is not in the openList
                     {
-                        openList.Add(aSquare);
+                        openList.Add(adjacentSquare);
                     }
 
-                    if (aSquare.F < openList.First(x => x.Position == aSquare.Position).F)
+                    if (adjacentSquare.F < openList.First(x => x.Position == adjacentSquare.Position).F)
                     {
-                        squareWithLowestFScore = aSquare;
+                        squareWithLowestFScore = adjacentSquare;
                     }
                 }
 
@@ -91,6 +103,8 @@ namespace TurnBasedAssets.Scripts.PathFinding
             {
                 Debug.Log(closedSpace.Position);
             }
+
+            Debug.Log("Finished FindPath");
         }
     }
 }

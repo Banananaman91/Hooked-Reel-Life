@@ -6,13 +6,15 @@ namespace TurnBasedAssets.Scripts.MouseController
     {
         private ISelection _selection;
         [SerializeField] private PlayerController.PlayerController player;
+
         public Vector3 rawGridPoint;
+        private Vector3 previousGridPoint;
+
         public float distanceY;
         public float offset;
         public float gridSize;
         public Plane _plane;
         private Vector3 distanceFromCamera;
-        private Vector3 _previousGridPoint;
         
 
         private void Start()
@@ -30,28 +32,18 @@ namespace TurnBasedAssets.Scripts.MouseController
 
             if (_plane.Raycast(ray, out gridSpace))
             {
-                rawGridPoint = ray.GetPoint(gridSpace);
-                rawGridPoint -= Vector3.one * offset;
-                rawGridPoint /= gridSize;
-                rawGridPoint = new Vector3(Mathf.Round(rawGridPoint.x), Mathf.Round(rawGridPoint.y), Mathf.Round(rawGridPoint.z));
-                rawGridPoint *= gridSize;
-                rawGridPoint += Vector3.one * offset;
-
-                //if (_previousGridPoint != rawGridPoint)
-                //{
-                //    player.FindPossibleMovePositions(rawGridPoint);
-                //    _previousGridPoint = rawGridPoint;
-                //}
+                rawGridPoint = CalculateGridPoint(ray, gridSpace);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    if (_previousGridPoint != rawGridPoint)
+                    if (previousGridPoint != rawGridPoint)
                     {
                         player.FindPossibleMovePositions(rawGridPoint);
-                        _previousGridPoint = rawGridPoint;
+                        previousGridPoint = rawGridPoint;
                     }
                 }
 
+                //// Makes player follow mouse
                 //if (player != null) player.transform.position = rawGridPoint;
             }
 
@@ -72,6 +64,20 @@ namespace TurnBasedAssets.Scripts.MouseController
                     if (_selection != null) _selection.DeSelect();
                 }
             }
+        }
+
+        public Vector3 CalculateGridPoint(Ray ray, float gridSpace)
+        {
+            Vector3 gridPoint;
+
+            gridPoint = ray.GetPoint(gridSpace);
+            gridPoint -= Vector3.one * offset;
+            gridPoint /= gridSize;
+            gridPoint = new Vector3(Mathf.Round(gridPoint.x), Mathf.Round(gridPoint.y), Mathf.Round(gridPoint.z));
+            gridPoint *= gridSize;
+            gridPoint += Vector3.one * offset;
+
+            return gridPoint;
         }
     }
 }
