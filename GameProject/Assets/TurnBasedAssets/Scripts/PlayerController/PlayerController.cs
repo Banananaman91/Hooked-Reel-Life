@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
@@ -51,7 +52,7 @@ namespace TurnBasedAssets.Scripts.PlayerController
         
         public void FindPossibleMovePositions(Vector3 rawGridPoint)
         {
-            _findPath.FindPath(transform.position, rawGridPoint);
+            StartCoroutine(_findPath.FindPath(transform.position, rawGridPoint));
 
             //// Reset move options
             //_possibleMoves.Clear();

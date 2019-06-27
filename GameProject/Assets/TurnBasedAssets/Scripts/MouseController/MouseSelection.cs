@@ -50,8 +50,6 @@ namespace TurnBasedAssets.Scripts.MouseController
                         player.FindPossibleMovePositions(rawGridPoint);
                         _previousGridPoint = rawGridPoint;
                     }
-
-                    player.MovePlayer(rawGridPoint);
                 }
 
                 //if (player != null) player.transform.position = rawGridPoint;

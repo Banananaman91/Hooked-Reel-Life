@@ -447,8 +447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82610a70f6281184b93a65d15522348b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveTilePrefab: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
-    type: 3}
   _findPath: {fileID: 1542029587}
   currentPos: {x: 0, y: 0, z: 0}
   maxDistance: 0
@@ -468,6 +466,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 1}
+  m_AnchoredPosition: {x: 10, y: 2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
