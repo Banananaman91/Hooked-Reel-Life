@@ -95,13 +95,6 @@ namespace TurnBasedAssets.Scripts.PathFinding
 
             pathToFollow.Reverse();
 
-//            PlayerControls.PlayerController playerController = FindObjectOfType<PlayerControls.PlayerController>();
-//            if(playerController != null)
-//            {
-//                //// Commented out to stop unity crashing :(
-//                //playerController.MovePlayer(pathToFollow);
-//            }
-
             onCompletion(pathToFollow);
         }
     }

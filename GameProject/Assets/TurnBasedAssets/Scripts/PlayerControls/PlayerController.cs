@@ -12,14 +12,6 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         [SerializeField] private PathFinder pathFinder;
         public Vector3 currentPos;
         private MouseSelection _mouseSelection;
-        Action<IEnumerable<Vector3>> path;
-
-        //// Unused:
-        //private List<Vector3> _possibleMoves = new List<Vector3>();
-        //private float _minDist = Mathf.Infinity;
-        //private Vector3 _newPosition;
-        //[SerializeField] private int maxDistance;
-
 
         private void Start()
         {
@@ -29,37 +21,11 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             currentPos = transform.position;
         }
 
-
-        private void Update()
+        public void Update()
         {
-            //if (_findPossibleMoves)
-            //    FindPossibleMovePositions()
-
-            MovePlayer();
+            currentPos = transform.position;
         }
 
-
-        public void MovePlayer()
-        {
-            //foreach (var possibleMoves in _possibleMoves )
-            //{
-            //    float distance = Vector3.Distance(possibleMoves, rawGridPoint);
-            //    if (distance < _minDist)
-            //    {
-            //        _newPosition = possibleMoves;
-            //        _minDist = distance;
-            //    }
-            //}
-
-            transform.position = Vector3.MoveTowards(transform.position, currentPos, 1);
-
-            //for (int p = pathToFollow.Count - 1; p > -1; p--)
-            //{
-            //    currentPos = pathToFollow[p];
-            //    transform.position = currentPos;
-            //}
-        }
-        
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             IEnumerable<Vector3> path = new List<Vector3>();
@@ -67,31 +33,11 @@ namespace TurnBasedAssets.Scripts.PlayerControls
 
             foreach (var LOCATION in path)
             {
-                //transform.position = Vector3.MoveTowards(transform.position, LOCATION, 1);
-                currentPos = LOCATION;
-                Debug.Log(LOCATION);
+                transform.position = Vector3.MoveTowards(transform.position, LOCATION, 1);
+                //currentPos = LOCATION;
             }
 
             yield return null;
-
-            //// Reset move options
-            //_possibleMoves.Clear();
-
-            //foreach (GameObject tile in _moveTiles)
-            //{
-            //    Destroy(tile);
-            //}
-
-            //_moveTiles.Clear();
-            //Vector3 route = (currentPos + rawGridPoint).normalized;
-
-            //_possibleMoves.Add(currentPos + route);
-
-            //foreach (Vector3 newTilePos in _possibleMoves)
-            //{
-            //    GameObject newTile = Instantiate(_moveTilePrefab, newTilePos, Quaternion.identity);
-            //    _moveTiles.Add(newTile);
-            //}
         }
 
 

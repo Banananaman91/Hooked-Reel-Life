@@ -9,50 +9,42 @@ namespace TurnBasedAssets.Scripts.MouseController
 
         public Vector3 rawGridPoint;
         private Vector3 previousGridPoint;
-        [SerializeField] private float movableRadius = 5;
+        [SerializeField] private float movableRadius;
 
         public float distanceY;
         public float offset;
         public float gridSize;
         public Plane _plane;
-        private Vector3 distanceFromCamera;
+        private Vector3 _distanceFromCamera;
         
 
         private void Start()
         {
             var position = Camera.main.transform.position;
-            distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
-            _plane = new Plane(Vector3.up, distanceFromCamera);
+            _distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
+            _plane = new Plane(Vector3.up, _distanceFromCamera);
         }
 
         private void Update()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
 
-            float gridSpace = 0;
-
-            if (_plane.Raycast(ray, out gridSpace))
+            if (_plane.Raycast(ray, out float gridSpace))
             {
                 rawGridPoint = CalculateGridPoint(ray, gridSpace);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    if (previousGridPoint != rawGridPoint)
+                    Debug.Log(Vector3.Distance(player.currentPos, rawGridPoint));
+                    if (Vector3.Distance(player.currentPos, rawGridPoint) <= movableRadius)
                     {
-                        if(Vector3.Distance(player.currentPos, rawGridPoint) <= movableRadius)
-                        {
-                            StartCoroutine(player.FindPossibleMovePositions(rawGridPoint));
-                            previousGridPoint = rawGridPoint;
-                        }
-                        else
-                        {
-                            Debug.Log("This is too far away");
-                        }
+                        StartCoroutine(player.FindPossibleMovePositions(rawGridPoint));
+                    }
+                    else
+                    {
+                        Debug.Log("This is too far away");
                     }
                 }
-
-                //// Makes player follow mouse
-                //if (player != null) player.transform.position = rawGridPoint;
             }
 
             if(Input.GetKeyDown(KeyCode.Mouse0))
