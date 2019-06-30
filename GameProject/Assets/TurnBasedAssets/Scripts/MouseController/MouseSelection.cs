@@ -5,10 +5,11 @@ namespace TurnBasedAssets.Scripts.MouseController
     public class MouseSelection : MonoBehaviour
     {
         private ISelection _selection;
-        [SerializeField] private PlayerController.PlayerController player;
+        [SerializeField] private PlayerControls.PlayerController player;
 
         public Vector3 rawGridPoint;
         private Vector3 previousGridPoint;
+        [SerializeField] private float movableRadius = 5;
 
         public float distanceY;
         public float offset;
@@ -38,8 +39,15 @@ namespace TurnBasedAssets.Scripts.MouseController
                 {
                     if (previousGridPoint != rawGridPoint)
                     {
-                        player.FindPossibleMovePositions(rawGridPoint);
-                        previousGridPoint = rawGridPoint;
+                        if(Vector3.Distance(player.currentPos, rawGridPoint) <= movableRadius)
+                        {
+                            player.FindPossibleMovePositions(rawGridPoint);
+                            previousGridPoint = rawGridPoint;
+                        }
+                        else
+                        {
+                            Debug.Log("This is too far away");
+                        }
                     }
                 }
 

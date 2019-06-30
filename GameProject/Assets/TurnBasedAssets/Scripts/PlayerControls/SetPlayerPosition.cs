@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TurnBasedAssets.Scripts.PlayerController
+namespace TurnBasedAssets.Scripts.PlayerControls
 {
     public class SetPlayerPosition : MonoBehaviour, ISelection
     {

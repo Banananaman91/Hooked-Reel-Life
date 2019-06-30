@@ -8,6 +8,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
 {
     public class PathFinder : MonoBehaviour
     {
+        public List<Vector3> pathToFollow = new List<Vector3>();
         public class Location
         {
             public Location Parent { get; set; }
@@ -103,54 +104,27 @@ namespace TurnBasedAssets.Scripts.PathFinding
 
             Debug.Log("START PATH LIST");
 
-            List<Vector3> pathToFollow = new List<Vector3>();
+            pathToFollow.Clear();
 
             pathToFollow.Add(closedList.Last().PositionInWorld);
 
-            pathToFollow.Add(closedList.Last().Parent.PositionInWorld);
-            closedList.Remove(closedList.Last());
-
-            //while(pathToFollow.Any(x => x != startPosition))
-            //{
-            //    foreach (Location locationToCheck in closedList.ToArray())
-            //    {
-            //        if(locationToCheck.Parent != null)
-            //        {
-            //            pathToFollow.Add(closedList.Last().Parent.PositionInWorld);
-            //            closedList.Remove(closedList.Last());
-            //        }
-            //    }
-            //}
-
-
-
-            //while (pathToFollow.Any(x => x != targetPosition)) // While the pathToFollow list doesn't contain the targetPosition
-            //{
-            //    foreach (Vector3 pathVector in pathToFollow)
-            //    {
-            //        Debug.Log(pathVector);
-            //    }
-
-            //    foreach (Location locationToCheck in closedList) // Check each location in closedList
-            //    {
-            //        //Debug.Log("locationToCheck: " + locationToCheck.PositionInWorld);
-            //        //Debug.Log("locationToCheck Parent: " + locationToCheck.Parent.PositionInWorld);
-
-            //        if (locationToCheck.Parent != null)
-            //        {
-            //            if (locationToCheck.Parent.PositionInWorld == pathToFollow.Last())  // If the parent of the current location
-            //                                                                                // was the last added to pathToFollow
-            //            {
-            //                pathToFollow.Add(locationToCheck.PositionInWorld); // Add current to pathToFollow
-            //            }
-            //        }
-            //    }
-            //}
+            do
+            {
+                pathToFollow.Add(closedList.Last().Parent.PositionInWorld);
+                closedList.Remove(closedList.Last());
+            } while (!pathToFollow.Contains(startPosition));
 
             Debug.Log("PATH TO FOLLOW:");
             foreach (Vector3 pathVector in pathToFollow)
             {
                 Debug.Log(pathVector);
+            }
+
+            PlayerControls.PlayerController playerController = FindObjectOfType<PlayerControls.PlayerController>();
+            if(playerController != null)
+            {
+                //// Commented out to stop unity crashing :(
+                //playerController.MovePlayer(pathToFollow);
             }
 
             yield return null;

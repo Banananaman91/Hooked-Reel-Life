@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
 
-namespace TurnBasedAssets.Scripts.PlayerController
+namespace TurnBasedAssets.Scripts.PlayerControls
 {
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PathFinder pathFinder;
         public Vector3 currentPos;
-        private List<Vector3> _possibleMoves = new List<Vector3>();
-
-        private float _minDist = Mathf.Infinity;
         private MouseSelection _mouseSelection;
-        private Vector3 _newPosition;
-        [SerializeField] private int maxDistance;
+
+        //// Unused:
+        //private List<Vector3> _possibleMoves = new List<Vector3>();
+        //private float _minDist = Mathf.Infinity;
+        //private Vector3 _newPosition;
+        //[SerializeField] private int maxDistance;
 
 
         private void Start()
@@ -34,7 +34,7 @@ namespace TurnBasedAssets.Scripts.PlayerController
         }
 
 
-        public void MovePlayer(Vector3 rawGridPoint)
+        public void MovePlayer(List<Vector3> pathToFollow)
         {
             //foreach (var possibleMoves in _possibleMoves )
             //{
@@ -45,8 +45,14 @@ namespace TurnBasedAssets.Scripts.PlayerController
             //        _minDist = distance;
             //    }
             //}
-            
+
             //Vector3.MoveTowards(transform.position, _newPosition, _minDist);
+
+            for (int p = pathToFollow.Count - 1; p > -1; p--)
+            {
+                currentPos = pathToFollow[p];
+                transform.position = currentPos;
+            }
         }
         
         public void FindPossibleMovePositions(Vector3 rawGridPoint)
