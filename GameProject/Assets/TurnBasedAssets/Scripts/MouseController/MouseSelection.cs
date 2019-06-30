@@ -41,7 +41,7 @@ namespace TurnBasedAssets.Scripts.MouseController
                     {
                         if(Vector3.Distance(player.currentPos, rawGridPoint) <= movableRadius)
                         {
-                            player.FindPossibleMovePositions(rawGridPoint);
+                            StartCoroutine(player.FindPossibleMovePositions(rawGridPoint));
                             previousGridPoint = rawGridPoint;
                         }
                         else

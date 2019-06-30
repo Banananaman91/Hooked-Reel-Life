@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
@@ -10,6 +12,7 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         [SerializeField] private PathFinder pathFinder;
         public Vector3 currentPos;
         private MouseSelection _mouseSelection;
+        Action<IEnumerable<Vector3>> path;
 
         //// Unused:
         //private List<Vector3> _possibleMoves = new List<Vector3>();
@@ -55,9 +58,18 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             }
         }
         
-        public void FindPossibleMovePositions(Vector3 rawGridPoint)
+        public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
-            StartCoroutine(pathFinder.FindPath(transform.position, rawGridPoint));
+            IEnumerable<Vector3> path = new List<Vector3>();
+            yield return StartCoroutine(routine: pathFinder.FindPath(transform.position, rawGridPoint, newPath => path = newPath));
+
+            foreach (var LOCATION in path)
+            {
+                Vector3.MoveTowards(transform.position, LOCATION, 0);
+                Debug.Log(LOCATION);
+            }
+
+            yield return null;
 
             //// Reset move options
             //_possibleMoves.Clear();

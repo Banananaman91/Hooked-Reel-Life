@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PathFinding
@@ -27,7 +28,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
             }
         }
 
-        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition)
+        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, Action<IEnumerable<Vector3>> onCompletion)
         {
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
@@ -37,10 +38,6 @@ namespace TurnBasedAssets.Scripts.PathFinding
             var adjacentSquares = new List<Location>();
 
             Location squareWithLowestFScore = startLocation;
-
-            Debug.Log("Started FindPath");
-            Debug.Log("Start location: " + startLocation.PositionInWorld);
-            Debug.Log("Target pos: " + targetPosition);
 
             openList.Add(startLocation);
 
@@ -55,7 +52,6 @@ namespace TurnBasedAssets.Scripts.PathFinding
 
                 if (closedList.Any(x => x.PositionInWorld == targetPosition))
                 {
-                    Debug.Log("PATH FOUND!");
                     break;
                 }
 
@@ -83,26 +79,9 @@ namespace TurnBasedAssets.Scripts.PathFinding
                         squareWithLowestFScore = adjacentSquare;
                     }
                 }
+
+                yield return null;
             }
-
-            Debug.Log("OPEN LIST:");
-            foreach (var space in openList)
-            {
-                Debug.Log(space.PositionInWorld);
-            }
-
-            Debug.Log("CLOSED LIST:");
-            foreach (var closedSpace in closedList)
-            {
-                Debug.Log(closedSpace.PositionInWorld);
-            }
-
-            Debug.Log("Finished FindPath");
-
-
-            // Creating Path List:
-
-            Debug.Log("START PATH LIST");
 
             pathToFollow.Clear();
 
@@ -114,20 +93,14 @@ namespace TurnBasedAssets.Scripts.PathFinding
                 closedList.Remove(closedList.Last());
             } while (!pathToFollow.Contains(startPosition));
 
-            Debug.Log("PATH TO FOLLOW:");
-            foreach (Vector3 pathVector in pathToFollow)
-            {
-                Debug.Log(pathVector);
-            }
+//            PlayerControls.PlayerController playerController = FindObjectOfType<PlayerControls.PlayerController>();
+//            if(playerController != null)
+//            {
+//                //// Commented out to stop unity crashing :(
+//                //playerController.MovePlayer(pathToFollow);
+//            }
 
-            PlayerControls.PlayerController playerController = FindObjectOfType<PlayerControls.PlayerController>();
-            if(playerController != null)
-            {
-                //// Commented out to stop unity crashing :(
-                //playerController.MovePlayer(pathToFollow);
-            }
-
-            yield return null;
+            onCompletion(pathToFollow);
         }
     }
 }
