@@ -33,11 +33,13 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         private void Update()
         {
             //if (_findPossibleMoves)
-            //    FindPossibleMovePositions();
+            //    FindPossibleMovePositions()
+
+            MovePlayer();
         }
 
 
-        public void MovePlayer(List<Vector3> pathToFollow)
+        public void MovePlayer()
         {
             //foreach (var possibleMoves in _possibleMoves )
             //{
@@ -49,13 +51,13 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             //    }
             //}
 
-            //Vector3.MoveTowards(transform.position, _newPosition, _minDist);
+            transform.position = Vector3.MoveTowards(transform.position, currentPos, 1);
 
-            for (int p = pathToFollow.Count - 1; p > -1; p--)
-            {
-                currentPos = pathToFollow[p];
-                transform.position = currentPos;
-            }
+            //for (int p = pathToFollow.Count - 1; p > -1; p--)
+            //{
+            //    currentPos = pathToFollow[p];
+            //    transform.position = currentPos;
+            //}
         }
         
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
@@ -65,7 +67,8 @@ namespace TurnBasedAssets.Scripts.PlayerControls
 
             foreach (var LOCATION in path)
             {
-                Vector3.MoveTowards(transform.position, LOCATION, 0);
+                //transform.position = Vector3.MoveTowards(transform.position, LOCATION, 1);
+                currentPos = LOCATION;
                 Debug.Log(LOCATION);
             }
 

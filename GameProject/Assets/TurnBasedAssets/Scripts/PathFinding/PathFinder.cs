@@ -93,6 +93,8 @@ namespace TurnBasedAssets.Scripts.PathFinding
                 closedList.Remove(closedList.Last());
             } while (!pathToFollow.Contains(startPosition));
 
+            pathToFollow.Reverse();
+
 //            PlayerControls.PlayerController playerController = FindObjectOfType<PlayerControls.PlayerController>();
 //            if(playerController != null)
 //            {
