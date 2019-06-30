@@ -8,13 +8,9 @@ namespace TurnBasedAssets.Scripts.PlayerController
 {
     public class PlayerController : MonoBehaviour
     {
-        //[SerializeField] private GameObject _moveTilePrefab;
-
-        [SerializeField] private PathFinder _findPath;
+        [SerializeField] private PathFinder pathFinder;
         public Vector3 currentPos;
         private List<Vector3> _possibleMoves = new List<Vector3>();
-
-        //private List<GameObject> _moveTiles = new List<GameObject>();
 
         private float _minDist = Mathf.Infinity;
         private MouseSelection _mouseSelection;
@@ -24,6 +20,9 @@ namespace TurnBasedAssets.Scripts.PlayerController
 
         private void Start()
         {
+            if(GetComponent<PathFinder>() != null)
+                pathFinder = GetComponent<PathFinder>();
+
             currentPos = transform.position;
         }
 
@@ -37,22 +36,22 @@ namespace TurnBasedAssets.Scripts.PlayerController
 
         public void MovePlayer(Vector3 rawGridPoint)
         {
-            foreach (var possibleMoves in _possibleMoves )
-            {
-                float distance = Vector3.Distance(possibleMoves, rawGridPoint);
-                if (distance < _minDist)
-                {
-                    _newPosition = possibleMoves;
-                    _minDist = distance;
-                }
-            }
+            //foreach (var possibleMoves in _possibleMoves )
+            //{
+            //    float distance = Vector3.Distance(possibleMoves, rawGridPoint);
+            //    if (distance < _minDist)
+            //    {
+            //        _newPosition = possibleMoves;
+            //        _minDist = distance;
+            //    }
+            //}
             
-            Vector3.MoveTowards(transform.position, _newPosition, _minDist);
+            //Vector3.MoveTowards(transform.position, _newPosition, _minDist);
         }
         
         public void FindPossibleMovePositions(Vector3 rawGridPoint)
         {
-            StartCoroutine(_findPath.FindPath(transform.position, rawGridPoint));
+            StartCoroutine(pathFinder.FindPath(transform.position, rawGridPoint));
 
             //// Reset move options
             //_possibleMoves.Clear();
