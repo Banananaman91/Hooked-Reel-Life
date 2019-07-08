@@ -30,7 +30,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
             }
         }
 
-        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, Action<IEnumerable<Vector3>> onCompletion)
+        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, Action<IEnumerable<Vector3>> onCompletion)
         {
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
@@ -54,11 +54,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
                 }
 
                 adjacentSquares.Clear();
-                adjacentSquares.Add(new Location(currentLocation.PositionInWorld + Vector3.forward, targetPosition, currentLocation));
-                adjacentSquares.Add(new Location(currentLocation.PositionInWorld + Vector3.back, targetPosition, currentLocation));
-                adjacentSquares.Add(new Location(currentLocation.PositionInWorld + Vector3.left, targetPosition, currentLocation));
-                adjacentSquares.Add(new Location(currentLocation.PositionInWorld + Vector3.right, targetPosition, currentLocation));
-
+                adjacentSquares = !is3D ? GetAdjacentSquares2D(currentLocation, targetPosition) : GetAdjacentSquares3D(currentLocation, targetPosition);
 
                 foreach (var adjacentSquare in adjacentSquares)
                 {
@@ -97,6 +93,43 @@ namespace TurnBasedAssets.Scripts.PathFinding
             pathToFollow.Reverse();
 
             onCompletion(pathToFollow);
+        }
+
+        private List<Location> GetAdjacentSquares2D(Location point, Vector3 target)
+        {
+            List<Location> returnList = new List<Location>();
+
+            for (float xIndex = point.PositionInWorld.x - 1; xIndex <= point.PositionInWorld.x + 1; xIndex++)
+            {
+                for (float zIndex = point.PositionInWorld.z - 1; zIndex <= point.PositionInWorld.z + 1; zIndex++)
+                {
+                    var adjacentVector = new Location(new Vector3(xIndex, point.PositionInWorld.y, zIndex),target, point);
+                    if (Vector3.Distance(point.PositionInWorld, adjacentVector.PositionInWorld) > 1) continue;
+                    returnList.Add(adjacentVector);
+                }
+            }
+
+            return returnList;
+        }
+        
+        private List<Location> GetAdjacentSquares3D(Location point, Vector3 target)
+        {
+            List<Location> returnList = new List<Location>();
+
+            for (float xIndex = point.PositionInWorld.x - 1; xIndex <= point.PositionInWorld.x + 1; xIndex++)
+            {
+                for (float yIndex = point.PositionInWorld.y - 1; yIndex <= point.PositionInWorld.y + 1; yIndex++)
+                {
+                    for (float zIndex = point.PositionInWorld.z - 1; zIndex <= point.PositionInWorld.z + 1; zIndex++)
+                    {
+                        var adjacentVector = new Location(new Vector3(xIndex, yIndex, zIndex), target,
+                            point);
+                        returnList.Add(adjacentVector);
+                    }
+                }
+            }
+
+            return returnList;
         }
     }
 }

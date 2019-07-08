@@ -29,13 +29,13 @@ namespace TurnBasedAssets.Scripts.PlayerControls
                 Destroy(TILE);
             }
             _pathTiles?.Clear();
-            yield return StartCoroutine(routine: _pathFinder.FindPath(transform.position, rawGridPoint, newPath => path = newPath));
+            yield return StartCoroutine(routine: _pathFinder.FindPath(transform.position, rawGridPoint, false, newPath => path = newPath));
 
             foreach (var LOCATION in path)
             {
                 GameObject newTile = Instantiate(tile, new Vector3(LOCATION.x, LOCATION.y, LOCATION.z), Quaternion.identity);
                 _pathTiles.Add(newTile);
-                transform.position = Vector3.MoveTowards(transform.position, LOCATION, 1);
+                transform.position = Vector3.MoveTowards(transform.position, LOCATION, Vector3.Distance(transform.position, LOCATION));
             }
 
             yield return null;
