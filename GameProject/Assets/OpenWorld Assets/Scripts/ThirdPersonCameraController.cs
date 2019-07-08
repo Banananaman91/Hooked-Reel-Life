@@ -10,7 +10,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     private Camera _cam;
 
-    private float _distance = 15.0f;    // DISTANCE TO STAY BEHIND PLAYER
+    private float _distance = 30.0f;    // DISTANCE TO STAY BEHIND PLAYER
     private float _currentX;
     private float _currentY;
     //private float _sensitivityX = 1.0f;
@@ -19,7 +19,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     private void Start()
     {
-        _camTransform = transform;
+        _camTransform = transform; 
         _cam = Camera.main;
     }
     private void Update()
@@ -31,16 +31,16 @@ public class ThirdPersonCameraController : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 _direction = new Vector3(0, 0, -_distance);
-        Quaternion _rotation = Quaternion.Euler(_currentY, _currentX, 0);
-        _camTransform.position = _lookAt.position + _rotation * _direction; 
+        Quaternion _rotation = Quaternion.Euler(_currentY, _currentX, _lookAt.localRotation.z);
+        _camTransform.position = _lookAt.position + _rotation * _direction;
         _camTransform.LookAt(_lookAt.position);
 
         // ROTATE WITH PLAYERS Z AXIS WHEN THE PLAYER ROTATES
 
         // _camTransform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);       /* da fuq even is dis? */
         // _camTransform.rotation = _lookAt.localRotation;      /* This works but obvs not what is needed */
-        Vector3 _targetPosition = new Vector3(0, 0, _camTransform.localRotation.z);
-        _camTransform.LookAt(_targetPosition);
+        // Vector3 _targetPosition = new Vector3(0, 0, _camTransform.localRotation.z);   _camTransform.LookAt(_targetPosition);
+        // _camTransform.RotateAround (_camTransform.position, _camTransform.up, _lookAt.rotation.z); /* idk what I'm doing anymore */
 
     }
 }

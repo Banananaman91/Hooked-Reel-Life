@@ -48,7 +48,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
 
         //left and right controls
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) // if only a is pressed 
-            
+
         {
             transform.position += transform.TransformDirection(Vector3.left) * Time.deltaTime * _moveSpeed;
         }
@@ -56,10 +56,11 @@ public class ThirdPersonCharacterController : MonoBehaviour
         {
             transform.position -= transform.TransformDirection(Vector3.left) * Time.deltaTime * _moveSpeed;
         }
-
     }
 
-    void PlayerTurn() // EXPERIMENTING ATM
+
+
+        void PlayerTurn() // EXPERIMENTING ATM
     {
         //rotX += Input.GetAxis("Mouse Y") * Time.deltaTime * rotatespeed;
         //rotY += Input.GetAxis("Mouse X") * Time.deltaTime * rotatespeed;
