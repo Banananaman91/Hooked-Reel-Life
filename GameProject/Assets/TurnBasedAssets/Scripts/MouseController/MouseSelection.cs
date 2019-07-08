@@ -5,16 +5,15 @@ namespace TurnBasedAssets.Scripts.MouseController
     public class MouseSelection : MonoBehaviour
     {
         private ISelection _selection;
-        [SerializeField] private PlayerControls.PlayerController player;
+        [SerializeField] private PlayerControls.PlayerController _player;
 
-        public Vector3 rawGridPoint;
-        private Vector3 previousGridPoint;
+        private Vector3 _rawGridPoint;
+        private Vector3 _previousGridPoint;
         [SerializeField] private float movableRadius;
-
-        public float distanceY;
-        public float offset;
-        public float gridSize;
-        public Plane _plane;
+        [SerializeField] private float distanceY;
+        [SerializeField] private float offset;
+        [SerializeField] private float gridSize;
+        private Plane _plane;
         private Vector3 _distanceFromCamera;
         
 
@@ -31,14 +30,13 @@ namespace TurnBasedAssets.Scripts.MouseController
 
             if (_plane.Raycast(ray, out float gridSpace))
             {
-                rawGridPoint = CalculateGridPoint(ray, gridSpace);
+                _rawGridPoint = CalculateGridPoint(ray, gridSpace);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    Debug.Log(Vector3.Distance(player.currentPos, rawGridPoint));
-                    if (Vector3.Distance(player.currentPos, rawGridPoint) <= movableRadius)
+                    if (Vector3.Distance(_player.transform.position, _rawGridPoint) <= movableRadius)
                     {
-                        StartCoroutine(player.FindPossibleMovePositions(rawGridPoint));
+                        StartCoroutine(_player.FindPossibleMovePositions(_rawGridPoint));
                     }
                     else
                     {

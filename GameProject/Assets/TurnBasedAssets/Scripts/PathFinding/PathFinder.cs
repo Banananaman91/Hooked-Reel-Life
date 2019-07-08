@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using Unity.Collections;
 using UnityEngine;
 
@@ -32,13 +34,9 @@ namespace TurnBasedAssets.Scripts.PathFinding
         {
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
-
             var openList = new List<Location>();
             var closedList = new List<Location>();
             var adjacentSquares = new List<Location>();
-
-            Location squareWithLowestFScore = startLocation;
-
             openList.Add(startLocation);
 
             while (openList.Count > 0)
@@ -66,7 +64,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
                 {
                     if (closedList.Any(x => x.PositionInWorld == adjacentSquare.PositionInWorld)) // If the adjacentSqaure is in the closedList
                     {
-                        break;
+                        continue;
                     }
 
                     if (openList.All(x => x.PositionInWorld != adjacentSquare.PositionInWorld)) // If the adjacentSquare is not in the openList
@@ -74,9 +72,10 @@ namespace TurnBasedAssets.Scripts.PathFinding
                         openList.Add(adjacentSquare);
                     }
 
-                    if (adjacentSquare.F < openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).F)
+                    else if (adjacentSquare.F < openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).F)
                     {
-                        squareWithLowestFScore = adjacentSquare;
+                        openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).Parent =
+                            adjacentSquare;
                     }
                 }
 
@@ -85,12 +84,14 @@ namespace TurnBasedAssets.Scripts.PathFinding
 
             pathToFollow.Clear();
 
-            pathToFollow.Add(closedList.Last().PositionInWorld);
+            var current = closedList.Last();
 
+            pathToFollow.Add(current.PositionInWorld);
+            
             do
             {
-                pathToFollow.Add(closedList.Last().Parent.PositionInWorld);
-                closedList.Remove(closedList.Last());
+                pathToFollow.Add(current.Parent.PositionInWorld);
+                current = current.Parent;
             } while (!pathToFollow.Contains(startPosition));
 
             pathToFollow.Reverse();

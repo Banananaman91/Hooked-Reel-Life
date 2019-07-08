@@ -323,9 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d28747c4c143d9a5ce3440f95a3b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1542029588}
-  rawGridPoint: {x: 0, y: 0, z: 0}
-  movableRadius: 10
+  _player: {fileID: 0}
+  movableRadius: 0
   distanceY: 5
   offset: 1
   gridSize: 1
@@ -449,8 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82610a70f6281184b93a65d15522348b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathFinder: {fileID: 0}
-  currentPos: {x: 0, y: 0, z: 0}
+  tile: {fileID: 0}
 --- !u!224 &1542029590
 RectTransform:
   m_ObjectHideFlags: 0
