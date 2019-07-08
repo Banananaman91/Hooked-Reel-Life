@@ -21,35 +21,37 @@ public class trdprsnCharacter : MonoBehaviour
     {
         Playerturn(); // turn to face the player
         Playerrotate(); // rotate the player itself
+
     }
 
     private void FixedUpdate()
     {
-        Playermovement();
+        Playermovement(); // movement controls for player
     }
 
     void Playermovement()
     {
         //forward and back controls
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey("w")) // if w and shift are pressed
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W)) // if w and shift are pressed
         {
             transform.position += transform.TransformDirection(Vector3.forward) * Time.deltaTime * movespeed * 2.5f;
         }
-        else if (Input.GetKey("w") && !Input.GetKey(KeyCode.LeftShift)) // if only w is pressed
+        else if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.LeftShift)) // if only w is pressed
         {
             transform.position += transform.TransformDirection(Vector3.forward) * Time.deltaTime * movespeed;
         }
-        else if (Input.GetKey("s") && !Input.GetKey(KeyCode.LeftShift)) // if only s is pressed
+        else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.LeftShift)) // if only s is pressed
         {
             transform.position -= transform.TransformDirection(Vector3.forward) * Time.deltaTime * movespeed;
         }
 
         //left and right controls
-        if (Input.GetKey("a") && !Input.GetKey("d")) // if only a is pressed
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) // if only a is pressed 
+            
         {
             transform.position += transform.TransformDirection(Vector3.left) * Time.deltaTime * movespeed;
         }
-        else if (Input.GetKey("d") && !Input.GetKey("a")) // if only d is pressed
+        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) // if only d is pressed
         {
             transform.position -= transform.TransformDirection(Vector3.left) * Time.deltaTime * movespeed;
         }
@@ -70,12 +72,12 @@ public class trdprsnCharacter : MonoBehaviour
     void Playerrotate()
     {
         // if q is pressed rotate body left
-        if (Input.GetKey("q"))
+        if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(new Vector3(0, 0, rotZ) * Time.deltaTime * rotatespeed);
         }
         // if r is pressed rotate body right
-        if (Input.GetKey("e"))
+        if (Input.GetKey(KeyCode.E))
         {
             transform.Rotate(new Vector3(0, 0, -rotZ) * Time.deltaTime * rotatespeed);
         }
