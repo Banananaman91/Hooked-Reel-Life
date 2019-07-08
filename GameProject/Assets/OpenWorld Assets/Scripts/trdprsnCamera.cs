@@ -5,7 +5,7 @@ using UnityEngine;
 public class trdprsnCamera : MonoBehaviour
 {
     [SerializeField] Transform lookAt;
-    [SerializeField] Transform camTransform;
+    [SerializeField] Transform camTransform; // DELETE THIS
 
     private Camera cam;
 
@@ -33,5 +33,7 @@ public class trdprsnCamera : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
         camTransform.position = lookAt.position + rotation * dir;
         camTransform.LookAt(lookAt.position);
+        // Rotate with the player when they rotate on their own z axis
+        camTransform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);
     }
 }
