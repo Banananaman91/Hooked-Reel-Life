@@ -399,8 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb893c09c96db54384468f2705ef9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAt: {fileID: 2135707385}
-  camTransform: {fileID: 0}
+  _lookAt: {fileID: 0}
+  _camTransform: {fileID: 0}
 --- !u!1 &956077139
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,8 +922,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fd90cb63fbc0e4f8538a2467d44287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 10
-  rotatespeed: 10
+  _moveSpeed: 0
+  _rotateSpeed: 0
+  _rotZ: 0
 --- !u!4 &2135707385
 Transform:
   m_ObjectHideFlags: 0
