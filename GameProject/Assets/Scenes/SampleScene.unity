@@ -324,10 +324,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1542029588}
+  _mainCamera: {fileID: 534669904}
   movableRadius: 10
   distanceY: 5
   offset: 1
   gridSize: 1
+  selectedTile: {fileID: 5857300719643456642, guid: 22597ce1f6a820f4eace50179e30ccc5,
+    type: 3}
 --- !u!4 &601506083
 Transform:
   m_ObjectHideFlags: 0
@@ -448,7 +451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82610a70f6281184b93a65d15522348b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6, type: 3}
+  mouseSelectionScript: {fileID: 601506082}
+  movementSpeed: 2
 --- !u!224 &1542029590
 RectTransform:
   m_ObjectHideFlags: 0
