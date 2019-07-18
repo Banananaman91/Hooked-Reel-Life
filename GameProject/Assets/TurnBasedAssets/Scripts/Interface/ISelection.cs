@@ -1,5 +1,5 @@
 
-﻿namespace TurnBasedAssets.Scripts
+ namespace TurnBasedAssets.Scripts
  {
     public interface ISelection
     {
