@@ -19,7 +19,7 @@ namespace TurnBasedAssets.Scripts.Dialogue
         [SerializeField] private Image _dialogueBackground;
         [SerializeField] private GameObject _dialogueBox;
         private List<Button> _responseOptions = new List<Button>();
-        private Image previousImage;
+        private Image _previousImage;
 
         private void RenderPageText(string pageName, string pageText)
         {
@@ -42,7 +42,7 @@ namespace TurnBasedAssets.Scripts.Dialogue
 
         public void PlayParagraphCycle(Dialogue npcDialogue, NpcImages npcImages, int paragraphNumber)
         {
-            if (_dialogueBox.activeSelf == false) _dialogueBox.SetActive(true);
+            if (!_dialogueBox.activeSelf) _dialogueBox.SetActive(true);
             
             if (paragraphNumber < 0)
             {
@@ -50,10 +50,10 @@ namespace TurnBasedAssets.Scripts.Dialogue
             }
             else
             {
-                if (previousImage != null) Destroy(previousImage.gameObject);
+                if (_previousImage != null) Destroy(_previousImage.gameObject);
                 var newImage = Instantiate(npcImages.NpcImage[npcDialogue.NpcId].NpcMoodImages[npcDialogue.Messages[paragraphNumber].NpcMoodId], _pageImagePosition.transform);
                 newImage.transform.SetParent(_dialogueBackground.transform);
-                previousImage = newImage;
+                _previousImage = newImage;
                 StartCoroutine(Play(npcDialogue, npcDialogue.Messages[paragraphNumber]));
                 GetResponse(npcDialogue, npcDialogue.Messages[paragraphNumber], npcImages);
             }
@@ -69,7 +69,6 @@ namespace TurnBasedAssets.Scripts.Dialogue
             int buttonCount = 0;
             foreach (var response in npcResponses.Responses)
             {
-                
                 var button = Instantiate(_option, _buttonPositions[buttonCount].transform.position, _buttonPositions[buttonCount].transform.rotation);
                 button.transform.SetParent(_dialogueBackground.transform);
                 button.GetComponentInChildren<Text>().text = response.Reply;
@@ -81,8 +80,8 @@ namespace TurnBasedAssets.Scripts.Dialogue
 
         private void EndDialogue()
         {
-            _pageName.text = "";
-            _pageText.text = "";
+            _pageName.text = string.Empty;
+            _pageText.text = string.Empty;
             _dialogueBox.SetActive(false);
         }
     }
