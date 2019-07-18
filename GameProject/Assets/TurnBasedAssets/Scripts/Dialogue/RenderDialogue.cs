@@ -12,14 +12,14 @@ namespace TurnBasedAssets.Scripts.Dialogue
     {
         [SerializeField] private Text _pageName;
         [SerializeField] private Text _pageText;
+        [SerializeField] private GameObject _pageImagePosition;
         [SerializeField] private float _sentenceSpeed;
         [SerializeField] private Button _option;
-        [SerializeField] private int _buttonDistance;
-        [SerializeField] private Vector3 _buttonPosition;
-        private List<Button> _responseOptions;
-        private Button _previousButton;
-        private int Next { get; set; }
-        private Vector3 PreviousButtonPosition => _previousButton.transform.position;
+        [SerializeField] private GameObject[] _buttonPositions;
+        [SerializeField] private Image _dialogueBackground;
+        [SerializeField] private GameObject _dialogueBox;
+        private List<Button> _responseOptions = new List<Button>();
+        private Image previousImage;
 
         private void RenderPageText(string pageName, string pageText)
         {
@@ -27,77 +27,63 @@ namespace TurnBasedAssets.Scripts.Dialogue
             _pageText.text = pageText;
         }
 
-        private IEnumerator Play(Message npcMessage)
+        private IEnumerator Play(Dialogue npc, Message npcMessage)
         {
             var sb = new StringBuilder();
             var letters = npcMessage.MessageText.ToCharArray();
             foreach (var letter in letters)
             {
                 sb.Append(letter);
-                RenderPageText(npcMessage.ToString(), sb.ToString());
+                RenderPageText(npc.NpcName, sb.ToString());
                 yield return new WaitForSeconds(_sentenceSpeed);
             }
             yield return null;
         }
 
-        public IEnumerator RunParagraphCycle(Dialogue npc)
+        public void PlayParagraphCycle(Dialogue npcDialogue, NpcImages npcImages, int paragraphNumber)
         {
-            int paragraphCounter = 0;
-            Coroutine currentRoutine = null;
-            while (paragraphCounter < npc.Messages.Count)
+            if (_dialogueBox.activeSelf == false) _dialogueBox.SetActive(true);
+            
+            if (paragraphNumber < 0)
             {
-                if (currentRoutine != null) StopCoroutine(currentRoutine);
-                //currentRoutine = StartCoroutine(Play(npc));
-                ++paragraphCounter;
-                yield return new WaitForSeconds(_sentenceSpeed);
-                while (!Input.GetKeyDown(KeyCode.E))
-                {
-                    yield return null;
-                }
-                yield return null;
+                EndDialogue();
             }
-            if (currentRoutine != null) StopCoroutine(currentRoutine);
+            else
+            {
+                if (previousImage != null) Destroy(previousImage.gameObject);
+                var newImage = Instantiate(npcImages.NpcImage[npcDialogue.NpcId].NpcMoodImages[npcDialogue.Messages[paragraphNumber].NpcMoodId], _pageImagePosition.transform);
+                newImage.transform.SetParent(_dialogueBackground.transform);
+                previousImage = newImage;
+                StartCoroutine(Play(npcDialogue, npcDialogue.Messages[paragraphNumber]));
+                GetResponse(npcDialogue, npcDialogue.Messages[paragraphNumber], npcImages);
+            }
         }
 
-        public IEnumerator PlayParagraphCycle(Dialogue npcDialogue)
+        private void GetResponse(Dialogue npcMessage, Message npcResponses, NpcImages npcImages)
         {
-            int endCount = 0;
-            int nextParagraph = 0;
-            Coroutine currentRoutine = null;
-            Next = npcDialogue.Messages[endCount].Responses[endCount].Next;
-            while (endCount <= Next)
+            foreach (Button buttonObject in _responseOptions)
             {
-                if (currentRoutine != null) StopCoroutine(currentRoutine);
-                currentRoutine = StartCoroutine(Play(npcDialogue.Messages[nextParagraph]));
-                yield return StartCoroutine(GetResponse(npcDialogue.Messages[nextParagraph], nextResponse => Next = nextResponse));
-                nextParagraph = Next;
+                Destroy(buttonObject.gameObject);
             }
-
-            yield return null;
-        }
-
-        private IEnumerator GetResponse(Message npcResponses, Action<int> nextResponse)
-        {
-            _responseOptions = new List<Button>();
+            _responseOptions.Clear();
+            int buttonCount = 0;
             foreach (var response in npcResponses.Responses)
             {
-                var Button = Instantiate(_option);
-                Button.GetComponentInChildren<Text>().text = response.Reply;
-                if (_previousButton != null)
-                {
-                    Button.transform.position = new Vector3(PreviousButtonPosition.x + _buttonDistance, PreviousButtonPosition.y, PreviousButtonPosition.z);
-                }
-                else
-                {
-                    Button.transform.position = new Vector3(_buttonPosition.x, _buttonPosition.y, _buttonPosition.z);
-                }
-                _previousButton = Button;
-                _responseOptions.Add(Button);
+                
+                var button = Instantiate(_option, _buttonPositions[buttonCount].transform.position, _buttonPositions[buttonCount].transform.rotation);
+                button.transform.SetParent(_dialogueBackground.transform);
+                button.GetComponentInChildren<Text>().text = response.Reply;
+                _responseOptions.Add(button);
+                button.onClick.AddListener(() => PlayParagraphCycle(npcMessage, npcImages, response.Next));
+                ++buttonCount;
             }
-            
-            
-            
-            yield return null;
+        }
+
+        private void EndDialogue()
+        {
+            _pageName.text = "";
+            _pageText.text = "";
+            _dialogueBox.SetActive(false);
         }
     }
 }

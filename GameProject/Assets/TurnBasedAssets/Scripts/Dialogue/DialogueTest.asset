@@ -13,19 +13,22 @@ MonoBehaviour:
   m_Name: DialogueTest
   m_EditorClassIdentifier: 
   _npcID: 0
-  _npcName: 
+  _npcName: Npc1
   _messages:
-  - _messageText: Hello
+  - _npcMoodId: 0
+    _messageText: Hello
     _responses:
     - _next: 1
       _reply: Hello!
     - _next: 2
       _reply: Fuck you
-  - _messageText: How are you?
+  - _npcMoodId: 0
+    _messageText: How are you?
     _responses:
-    - _next: -1
+    - _next: 2
       _reply: Get fucked
-  - _messageText: Well fuck you too
+  - _npcMoodId: 1
+    _messageText: Well fuck you too
     _responses:
     - _next: -1
       _reply: '*scoffs and walks away*'
