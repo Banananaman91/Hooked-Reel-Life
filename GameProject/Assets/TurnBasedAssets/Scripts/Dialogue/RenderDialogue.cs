@@ -66,15 +66,15 @@ namespace TurnBasedAssets.Scripts.Dialogue
                 Destroy(buttonObject.gameObject);
             }
             _responseOptions.Clear();
-            int buttonCount = 0;
-            foreach (var response in npcResponses.Responses)
+            for (var index = 0; index < npcResponses.Responses.Count; index++)
             {
-                var button = Instantiate(_option, _buttonPositions[buttonCount].transform.position, _buttonPositions[buttonCount].transform.rotation);
+                var response = npcResponses.Responses[index];
+                var button = Instantiate(_option, _buttonPositions[index].transform.position,
+                    _buttonPositions[index].transform.rotation);
                 button.transform.SetParent(_dialogueBackground.transform);
                 button.GetComponentInChildren<Text>().text = response.Reply;
                 _responseOptions.Add(button);
                 button.onClick.AddListener(() => PlayParagraphCycle(npcMessage, npcImages, response.Next));
-                ++buttonCount;
             }
         }
 
