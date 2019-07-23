@@ -22,13 +22,14 @@ namespace TurnBasedAssets.Scripts.MouseController
         public Vector3 RawGridPoint => _rawGridPoint;
 
 
-        private void Start()
+        private void Awake()
         {
             _mainCamera.transform.position = new Vector3(CameraPosition.x,(int)Math.Round((CameraPosition.y)),CameraPosition.z);
             var position = Camera.main.transform.position;
             _distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
             _plane = new Plane(Vector3.up, _distanceFromCamera);
         }
+        
 
         private void Update()
         {
