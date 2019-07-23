@@ -41,3 +41,5 @@ GameProject/Assets/OpenWorld_Assets/3DModels/*
 !GameProject/Assets/OpenWorld_Assets/3DModels/.gitkeep
 GameProject/Assets/OpenWorld_Assets/Scripts/*
 !GameProject/Assets/OpenWorld_Assets/Scripts/.gitkeep
+
+GameProject/Assets/Plugins/Editor/JetBrains/
