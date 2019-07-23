@@ -244,6 +244,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSelectionScript: {fileID: 601506082}
+  pathFinderTiles: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
+    type: 3}
   movementSpeed: 2
   rotationSpeed: 150
 --- !u!1 &534669902
@@ -390,7 +392,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 24df23ea923385e4c8e7b79aac677587,
         type: 3}
       propertyPath: m_Name
-      value: PlayerFishPlaceholder4
+      value: PlayerFishPlaceholder
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 24df23ea923385e4c8e7b79aac677587,
         type: 3}

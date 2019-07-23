@@ -20,6 +20,11 @@ namespace TurnBasedAssets.Scripts.MouseController
         public Vector3 PlanePosition => _distanceFromCamera;
         public Vector3 CameraPosition => _mainCamera.transform.position;
         public Vector3 RawGridPoint => _rawGridPoint;
+        public ISelection Selection
+        {
+            get => _selection;
+            set => _selection = value;
+        }
 
 
         private void Awake()
@@ -51,7 +56,6 @@ namespace TurnBasedAssets.Scripts.MouseController
                                 _selection = hit.collider.GetComponent<ISelection>();
                                 _selection.Select();
                             }
-                            //_selection?.DeSelect();
                         }
                         
                         else
