@@ -2,14 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using Unity.Collections;
+using TurnBasedAssets.Scripts.Interface;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PathFinding
 {
-    public class PathFinder : MonoBehaviour
+    public class PathFinder : IPathFinder
     {
         public List<Vector3> pathToFollow = new List<Vector3>();
         public class Location

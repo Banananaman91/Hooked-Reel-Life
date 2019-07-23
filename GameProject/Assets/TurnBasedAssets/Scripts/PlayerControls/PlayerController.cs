@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TurnBasedAssets.Scripts.Interface;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
@@ -10,23 +11,27 @@ namespace TurnBasedAssets.Scripts.PlayerControls
 {
     public class PlayerController : MonoBehaviour
     {
-        private PathFinder _pathFinder;
+        private IPathFinder _iPathFinder;
         private Vector3 _currentPos;
         [SerializeField] private MouseSelection mouseSelectionScript;
         [SerializeField] private float movementSpeed;
 
         private void Start()
         {
+            PathMessenger.Instance.SendMessageOfType(new PathFinderRequestMessage(this));
             transform.position = new Vector3(transform.position.x, mouseSelectionScript.PlanePosition.y, transform.position.z);
-            if(GetComponent<PathFinder>() != null)
-                _pathFinder = GetComponent<PathFinder>();
+        }
+        
+        public void Initialise(IPathFinder pathFinder)
+        {
+            _iPathFinder = pathFinder;
         }
 
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             mouseSelectionScript.enabled = false;
             IEnumerable<Vector3> path = new List<Vector3>();
-            yield return StartCoroutine(routine: _pathFinder.FindPath(transform.position, rawGridPoint, false,
+            yield return StartCoroutine(routine: _iPathFinder.FindPath(transform.position, rawGridPoint, false,
                 newPath => path = newPath));
             foreach (var LOCATION in path)
             {
