@@ -20,6 +20,7 @@ namespace TurnBasedAssets.Scripts.MouseController
         public Vector3 PlanePosition => _distanceFromCamera;
         public Vector3 CameraPosition => _mainCamera.transform.position;
         public Vector3 RawGridPoint => _rawGridPoint;
+        public float MoveableRadius => movableRadius;
 
 
         private void Start()
