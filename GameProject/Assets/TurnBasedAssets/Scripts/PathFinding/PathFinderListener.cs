@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using TurnBasedAssets.Scripts.MessageBroker;
+using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PathFinding
 {
     public class PathFinderListener : MonoBehaviour
     {
-        private void Awake() => PathMessenger.Instance.RegisterMessageOfType<PathFinderRequestMessage>(OnPathFinderComponentRequestMessage);
+        private void Awake() => MessageBroker.MessageBroker.Instance.RegisterMessageOfType<PathFinderRequestMessage>(OnPathFinderComponentRequestMessage);
         
         private void OnPathFinderComponentRequestMessage(PathFinderRequestMessage message) => message.RequestingComponent.Initialise(new PathFinder());
     }

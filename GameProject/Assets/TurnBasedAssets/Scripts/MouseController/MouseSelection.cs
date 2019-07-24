@@ -28,7 +28,6 @@ namespace TurnBasedAssets.Scripts.MouseController
         public float MoveableRadius => movableRadius;
 
 
-
         private void Awake()
         {
             _mainCamera.transform.position = new Vector3(CameraPosition.x,(int)Math.Round((CameraPosition.y)),CameraPosition.z);

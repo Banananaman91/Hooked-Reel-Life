@@ -1,8 +1,6 @@
-﻿using System;
-using TurnBasedAssets.Scripts.Interface;
-using TurnBasedAssets.Scripts.PlayerControls;
+﻿using TurnBasedAssets.Scripts.PlayerControls;
 
-namespace TurnBasedAssets.Scripts.PathFinding
+namespace TurnBasedAssets.Scripts.MessageBroker
 {
     public struct PathFinderRequestMessage
     {

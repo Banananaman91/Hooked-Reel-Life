@@ -2,21 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.Interface;
+using TurnBasedAssets.Scripts.MessageBroker;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PlayerControls
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Controller
     {
         private IPathFinder _iPathFinder;
-        private Vector3 _currentPos;
+        private IPosition _iPosition;
+        private Vector3 _currentPosition;
         [SerializeField] private MouseSelection mouseSelectionScript;
         [SerializeField] private GameObject pathFinderTiles;
         [SerializeField] private float movementSpeed;
-
         [SerializeField] private float rotationSpeed;
         private IEnumerable<Vector3> path = new List<Vector3>();
         private List<GameObject> pathVisualized = new List<GameObject>();
@@ -27,21 +30,29 @@ namespace TurnBasedAssets.Scripts.PlayerControls
 
         private void Start()
         {
-            PathMessenger.Instance.SendMessageOfType(new PathFinderRequestMessage(this));
-            transform.position = new Vector3(transform.position.x, mouseSelectionScript.PlanePosition.y, transform.position.z);
+            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PathFinderRequestMessage(this));
+            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
+            SetPosition();
         }
-        
+
+        private void SetPosition()
+        {
+            transform.position = _iPosition.RePosition(transform.position, mouseSelectionScript.PlanePosition);
+        }
+
         public void Initialise(IPathFinder pathFinder)
         {
             _iPathFinder = pathFinder;
         }
 
+        public override void Initialise(IPosition iPosition)
+        {
+            _iPosition = iPosition;
+        }
+
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
-
             ClearTiles();
-            yield return StartCoroutine(routine: _iPathFinder.FindPath(transform.position, rawGridPoint, false,
-                newPath => path = newPath));
             List<Vector3> hitPositions = CheckPositions(rawGridPoint);
             mouseSelectionScript.enabled = false;
             IEnumerable<Vector3> path = new List<Vector3>();
@@ -82,14 +93,12 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             
         }
         
-
         private IEnumerator MoveToNextTile(Vector3 location)
         {
             transform.position = Vector3.MoveTowards(transform.position, location, movementSpeed * Time.deltaTime);
             yield return null;
         }
-
-
+        
         private IEnumerator RotatePlayer(Vector3 location)
         {
             Vector3 targetDir = location - transform.position;
@@ -107,7 +116,9 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             {
                 Destroy(tile);
             }
+
             pathVisualized.Clear();
+        }
 
         private List<Vector3> CheckPositions(Vector3 rawGridPoint)
         {

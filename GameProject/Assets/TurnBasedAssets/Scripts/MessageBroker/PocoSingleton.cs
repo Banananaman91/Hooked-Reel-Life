@@ -1,4 +1,4 @@
-﻿namespace TurnBasedAssets.Scripts.PathFinding
+﻿namespace TurnBasedAssets.Scripts.MessageBroker
 {
     public abstract class PocoSingleton<T> where T : class, new()
     {
