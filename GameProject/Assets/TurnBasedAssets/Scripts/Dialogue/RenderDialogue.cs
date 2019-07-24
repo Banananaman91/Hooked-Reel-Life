@@ -20,6 +20,8 @@ namespace TurnBasedAssets.Scripts.Dialogue
         [SerializeField] private GameObject _dialogueBox;
         private List<Button> _responseOptions = new List<Button>();
         private Image _previousImage;
+        private Image _newMoodImage;
+        private Coroutine _currentRoutine;
 
         private void RenderPageText(string pageName, string pageText)
         {
@@ -42,20 +44,44 @@ namespace TurnBasedAssets.Scripts.Dialogue
 
         public void PlayParagraphCycle(Dialogue npcDialogue, NpcImages npcImages, int paragraphNumber)
         {
-            if (!_dialogueBox.activeSelf) _dialogueBox.SetActive(true);
-            
             if (paragraphNumber < 0)
             {
                 EndDialogue();
             }
             else
             {
-                if (_previousImage != null) Destroy(_previousImage.gameObject);
-                var newImage = Instantiate(npcImages.NpcImage[npcDialogue.NpcId].NpcMoodImages[npcDialogue.Messages[paragraphNumber].NpcMoodId], _pageImagePosition.transform);
-                newImage.transform.SetParent(_dialogueBackground.transform);
-                _previousImage = newImage;
-                StartCoroutine(Play(npcDialogue, npcDialogue.Messages[paragraphNumber]));
+                var npcMoods = npcImages.NpcImage[npcDialogue.NpcId].NpcMoodImages;
+                foreach (var npcMood in npcMoods)
+                {
+                    if (npcMood.name.Contains(npcDialogue.Messages[paragraphNumber].NpcMood))
+                    {
+                        _newMoodImage = npcMood;
+                    }
+                }
+
+                if (!_dialogueBox.activeSelf)
+                {
+                    _dialogueBox.SetActive(true);
+                }
+
+                if (_previousImage != null)
+                {
+                    Destroy(_previousImage.gameObject);
+                }
+
+                if (_newMoodImage != null)
+                {
+                    var newImage = Instantiate(_newMoodImage, _pageImagePosition.transform);
+                    newImage.transform.SetParent(_dialogueBackground.transform);
+                    _previousImage = newImage;
+                }
+                if (_currentRoutine != null) StopCoroutine(_currentRoutine);
+                _pageName.text = string.Empty;
+                _pageText.text = string.Empty;
+
+                _currentRoutine = StartCoroutine(Play(npcDialogue, npcDialogue.Messages[paragraphNumber]));
                 GetResponse(npcDialogue, npcDialogue.Messages[paragraphNumber], npcImages);
+
             }
         }
 
@@ -80,6 +106,7 @@ namespace TurnBasedAssets.Scripts.Dialogue
 
         private void EndDialogue()
         {
+            if (_currentRoutine != null) StopCoroutine(_currentRoutine);
             _pageName.text = string.Empty;
             _pageText.text = string.Empty;
             _dialogueBox.SetActive(false);
