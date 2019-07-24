@@ -23,6 +23,9 @@ namespace TurnBasedAssets.Scripts.Dialogue
         private NpcMoods _npcImageMoods;
         private Image _newMoodImage;
         private Coroutine _currentRoutine;
+        private bool IsPreviousImageNotNull => _previousImage != null;
+        private bool IsCurrentRoutineNotNull => _currentRoutine != null;
+        private bool IsNewMoodImageNotNull => _newMoodImage != null;
 
         private void RenderPageText(string pageName, string pageText)
         {
@@ -73,18 +76,18 @@ namespace TurnBasedAssets.Scripts.Dialogue
                     _dialogueBox.SetActive(true);
                 }
 
-                if (_previousImage != null)
+                if (IsPreviousImageNotNull)
                 {
                     Destroy(_previousImage.gameObject);
                 }
 
-                if (_newMoodImage != null)
+                if (IsNewMoodImageNotNull)
                 {
                     var newImage = Instantiate(_newMoodImage, _pageImagePosition.transform);
                     newImage.transform.SetParent(_dialogueBackground.transform);
                     _previousImage = newImage;
                 }
-                if (_currentRoutine != null) StopCoroutine(_currentRoutine);
+                if (IsCurrentRoutineNotNull) StopCoroutine(_currentRoutine);
                 _pageName.text = string.Empty;
                 _pageText.text = string.Empty;
 
@@ -115,7 +118,7 @@ namespace TurnBasedAssets.Scripts.Dialogue
 
         private void EndDialogue()
         {
-            if (_currentRoutine != null) StopCoroutine(_currentRoutine);
+            if (IsCurrentRoutineNotNull) StopCoroutine(_currentRoutine);
             _pageName.text = string.Empty;
             _pageText.text = string.Empty;
             _dialogueBox.SetActive(false);

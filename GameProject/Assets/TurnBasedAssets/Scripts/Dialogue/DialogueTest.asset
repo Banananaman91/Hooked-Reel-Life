@@ -12,23 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b1bbf619fd35c4181b3101c7530ad8, type: 3}
   m_Name: DialogueTest
   m_EditorClassIdentifier: 
-  _npcID: 0
   _npcName: Npc1
   _messages:
-  - _npcMoodId: 0
-    _messageText: Hello
+  - _messageText: Hello
+    _npcMood: happy
     _responses:
     - _next: 1
       _reply: Hello!
     - _next: 2
       _reply: Fuck you
-  - _npcMoodId: 0
-    _messageText: How are you?
+  - _messageText: How are you?
+    _npcMood: Happy
     _responses:
     - _next: 2
       _reply: Get fucked
-  - _npcMoodId: 1
-    _messageText: Well fuck you too
+  - _messageText: Well fuck you too
+    _npcMood: angry
     _responses:
     - _next: -1
       _reply: '*scoffs and walks away*'

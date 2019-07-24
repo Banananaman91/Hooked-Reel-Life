@@ -12,25 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b1bbf619fd35c4181b3101c7530ad8, type: 3}
   m_Name: DialogueTest2
   m_EditorClassIdentifier: 
-  _npcID: 1
   _npcName: Npc2
   _messages:
-  - _npcMoodId: 0
-    _messageText: I'm not in the mood right now
+  - _messageText: I'm not in the mood right now
+    _npcMood: angry
     _responses:
     - _next: 1
       _reply: Can I help?
     - _next: -1
       _reply: Sorry to bother you
-  - _npcMoodId: 1
-    _messageText: Actually yes you can
+  - _messageText: Actually yes you can
+    _npcMood: relaxed
     _responses:
     - _next: 2
       _reply: What can I do?
     - _next: -1
       _reply: Tough shit
-  - _npcMoodId: 1
-    _messageText: I need you to go kill that other cube for me
+  - _messageText: I need you to go kill that other cube for me
+    _npcMood: angry
     _responses:
     - _next: -1
       _reply: On it!
