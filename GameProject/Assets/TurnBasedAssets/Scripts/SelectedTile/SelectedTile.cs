@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PlayerControls;
 using UnityEngine;
@@ -14,16 +15,18 @@ namespace TurnBasedAssets.Scripts.SelectedTile
         {
             _playerController = FindObjectOfType<PlayerController>();
             _mouseSelection = FindObjectOfType<MouseSelection>();
+            StartCoroutine(_playerController.FindPossibleMovePositions(_mouseSelection.RawGridPoint));
         }
 
         public void Select()
         {
-            StartCoroutine(_playerController.FindPossibleMovePositions(_mouseSelection.RawGridPoint));
+            StartCoroutine(_playerController.StartPlayerMovement());
         }
 
    
         public void DeSelect()
         {
+            _mouseSelection.Selection = null;
             Destroy(gameObject);
         }
     }

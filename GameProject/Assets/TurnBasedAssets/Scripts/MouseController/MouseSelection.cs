@@ -20,16 +20,23 @@ namespace TurnBasedAssets.Scripts.MouseController
         public Vector3 PlanePosition => _distanceFromCamera;
         public Vector3 CameraPosition => _mainCamera.transform.position;
         public Vector3 RawGridPoint => _rawGridPoint;
+        public ISelection Selection
+        {
+            get => _selection;
+            set => _selection = value;
+        }
         public float MoveableRadius => movableRadius;
 
 
-        private void Start()
+
+        private void Awake()
         {
             _mainCamera.transform.position = new Vector3(CameraPosition.x,(int)Math.Round((CameraPosition.y)),CameraPosition.z);
             var position = Camera.main.transform.position;
             _distanceFromCamera = new Vector3(position.x, position.y - distanceY,position.z);
             _plane = new Plane(Vector3.up, _distanceFromCamera);
         }
+        
 
         private void Update()
         {
@@ -51,7 +58,6 @@ namespace TurnBasedAssets.Scripts.MouseController
                                 _selection = hit.collider.GetComponent<ISelection>();
                                 _selection.Select();
                             }
-                            //_selection?.DeSelect();
                         }
                         
                         else
