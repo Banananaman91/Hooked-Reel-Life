@@ -54,8 +54,6 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         {
             ClearTiles();
             List<Vector3> hitPositions = CheckPositions(rawGridPoint);
-            mouseSelectionScript.enabled = false;
-            IEnumerable<Vector3> path = new List<Vector3>();
             yield return StartCoroutine(routine: _iPathFinder.FindPath(transform.position, rawGridPoint, false, hitPositions,newPath => path = newPath));
             foreach (var LOCATION in path)
             {
