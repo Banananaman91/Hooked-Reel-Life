@@ -20,6 +20,7 @@ namespace TurnBasedAssets.Scripts.Dialogue
         [SerializeField] private GameObject _dialogueBox;
         private List<Button> _responseOptions = new List<Button>();
         private Image _previousImage;
+        private NpcMoods _npcImageMoods;
         private Image _newMoodImage;
         private Coroutine _currentRoutine;
 
@@ -50,10 +51,18 @@ namespace TurnBasedAssets.Scripts.Dialogue
             }
             else
             {
-                var npcMoods = npcImages.NpcImage[npcDialogue.NpcId].NpcMoodImages;
-                foreach (var npcMood in npcMoods)
+                foreach (var npcImageMoods in npcImages.NpcImage)
                 {
-                    if (npcMood.name.Contains(npcDialogue.Messages[paragraphNumber].NpcMood))
+                    var npcImageName = npcImageMoods.NpcName.ToLower();
+                    if (npcImageName.Contains(npcDialogue.NpcName.ToLower()))
+                    {
+                        _npcImageMoods = npcImageMoods;
+                    }
+                }
+                foreach (var npcMood in _npcImageMoods.NpcMoodImages)
+                {
+                    var npcMoodName = npcMood.name.ToLower();
+                    if (npcMoodName.Contains(npcDialogue.Messages[paragraphNumber].NpcMood.ToLower()))
                     {
                         _newMoodImage = npcMood;
                     }
