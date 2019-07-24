@@ -25,6 +25,8 @@ namespace TurnBasedAssets.Scripts.MouseController
             get => _selection;
             set => _selection = value;
         }
+        public float MoveableRadius => movableRadius;
+
 
 
         private void Awake()

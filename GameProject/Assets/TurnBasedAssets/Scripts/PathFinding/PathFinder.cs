@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using TurnBasedAssets.Scripts.Interface;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace TurnBasedAssets.Scripts.PathFinding
 {
     public class PathFinder : IPathFinder
     {
         public List<Vector3> pathToFollow = new List<Vector3>();
+
+        private float _2dMaxDistance = 1;
         public class Location
         {
             public Location Parent { get; set; }
@@ -28,12 +31,23 @@ namespace TurnBasedAssets.Scripts.PathFinding
             }
         }
 
-        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, Action<IEnumerable<Vector3>> onCompletion)
+        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, List<Vector3> takenPositions, Action<IEnumerable<Vector3>> onCompletion)
         {
+            List<Location> openList = new List<Location>();
+            List<Location> closedList = new List<Location>();
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
-            var openList = new List<Location>();
-            var closedList = new List<Location>();
+
+            foreach (var taken in takenPositions)
+            {
+                Location newLocation = new Location(new Vector3(Mathf.Round(taken.x), taken.y, Mathf.Round(taken.z)), targetPosition, null);
+                closedList.Add(newLocation);
+                if (closedList.Any(x => x.PositionInWorld == targetPosition))
+                {
+                    closedList.Remove(newLocation);
+                }
+            }
+
             var adjacentSquares = new List<Location>();
             openList.Add(startLocation);
 
@@ -101,12 +115,13 @@ namespace TurnBasedAssets.Scripts.PathFinding
             {
                 for (float zIndex = point.PositionInWorld.z - 1; zIndex <= point.PositionInWorld.z + 1; zIndex++)
                 {
-                    var adjacentVector = new Location(new Vector3(xIndex, point.PositionInWorld.y, zIndex),target, point);
-                    if (Vector3.Distance(point.PositionInWorld, adjacentVector.PositionInWorld) > 1) continue;
+                    var adjacentVector =
+                        new Location(new Vector3(xIndex, point.PositionInWorld.y, zIndex), target, point);
+                    if (Vector3.Distance(point.PositionInWorld, adjacentVector.PositionInWorld) >
+                        _2dMaxDistance) continue;
                     returnList.Add(adjacentVector);
                 }
             }
-
             return returnList;
         }
         

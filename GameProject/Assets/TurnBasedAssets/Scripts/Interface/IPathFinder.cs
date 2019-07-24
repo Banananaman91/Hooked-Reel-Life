@@ -7,6 +7,6 @@ namespace TurnBasedAssets.Scripts.Interface
 {
     public interface IPathFinder
     {
-        IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, Action<IEnumerable<Vector3>> onCompletion);
+        IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, List<Vector3> takenPositions, Action<IEnumerable<Vector3>> onCompletion);
     }
 }
