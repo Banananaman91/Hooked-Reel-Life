@@ -53,7 +53,7 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             ClearTiles();
-            List<Vector3> hitPositions = CheckPositions(rawGridPoint);
+            List<Vector3> hitPositions = CheckPositions();
             yield return StartCoroutine(routine: _iPathFinder.FindPath(transform.position, rawGridPoint, false, hitPositions,newPath => path = newPath));
             foreach (var LOCATION in path)
             {
@@ -118,15 +118,33 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             pathVisualized.Clear();
         }
 
-        private List<Vector3> CheckPositions(Vector3 rawGridPoint)
+        private List<Vector3> CheckPositions()
         {
-            List<RaycastHit> hits = new List<RaycastHit>(Physics.SphereCastAll(transform.position, SphereRadius, rawGridPoint));
             List<Vector3> hitPositions = new List<Vector3>();
-            foreach (var hit in hits)
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, SphereRadius);
+            int i = 0;
+            while (i < hitColliders.Length)
             {
-                hitPositions.Add(hit.transform.position);
+                var objectPosition = hitColliders[i].transform.position;
+                var objectScaleX = hitColliders[i].transform.localScale.x;
+                var objectScaleY = hitColliders[i].transform.localScale.y;
+                var objectScaleZ = hitColliders[i].transform.localScale.z;
+                for (float xIndex = objectPosition.x - objectScaleX; xIndex <= objectPosition.x + objectScaleX; xIndex++)
+                {
+                    for (float zIndex = objectPosition.z - objectScaleZ; zIndex <= objectPosition.z + objectScaleZ; zIndex++)
+                    {
+                        for (float yIndex = objectPosition.y - objectScaleY; yIndex <= objectPosition.y + objectScaleY; yIndex++)
+                        {
+                            if (hitColliders[i].bounds.Contains(new Vector3(xIndex, yIndex, zIndex)))
+                            {
+                                hitPositions.Add(new Vector3(xIndex, yIndex, zIndex));
+                            }
+                        }
+                    }
+                }
+                hitPositions.Add(objectPosition);
+                i++;
             }
-
             return hitPositions;
         }
     }

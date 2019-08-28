@@ -18,8 +18,8 @@ namespace TurnBasedAssets.Scripts.PathFinding
             public Location Parent { get; set; }
             public Vector3 PositionInWorld { get; }
 
-            public float G => Parent?.G + 1 ?? 0;
-            public float H;
+            private float G => Parent?.G + 1 ?? 0;
+            private float H { get; }
             public float F => Mathf.Round(G + H);
 
 
