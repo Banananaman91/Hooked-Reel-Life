@@ -31,17 +31,39 @@ namespace TurnBasedAssets.Scripts.PathFinding
             }
         }
 
-        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, List<Vector3> takenPositions, Action<IEnumerable<Vector3>> onCompletion)
+        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, float movementRadius, Action<IEnumerable<Vector3>> onCompletion)
         {
             List<Location> openList = new List<Location>();
             List<Location> closedList = new List<Location>();
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
-
-            foreach (var taken in takenPositions)
+            
+            Collider[] hitColliders = Physics.OverlapSphere(startPosition, movementRadius);
+            for (int i = 0; i < hitColliders.Length; i++)
             {
-                Location newLocation = new Location(new Vector3(Mathf.Round(taken.x), taken.y, Mathf.Round(taken.z)), targetPosition, null);
-                closedList.Add(newLocation);
+                var objectPosition = hitColliders[i].transform.position;
+                var objectScaleX = hitColliders[i].transform.localScale.x;
+                var objectScaleY = hitColliders[i].transform.localScale.y;
+                var objectScaleZ = hitColliders[i].transform.localScale.z;
+                Location newLocation = new Location(objectPosition, targetPosition, null);
+                for (float xIndex = objectPosition.x - objectScaleX; xIndex <= objectPosition.x + objectScaleX; xIndex++)
+                {
+                    for (float zIndex = objectPosition.z - objectScaleZ; zIndex <= objectPosition.z + objectScaleZ; zIndex++)
+                    {
+                        for (float yIndex = objectPosition.y - objectScaleY; yIndex <= objectPosition.y + objectScaleY; yIndex++)
+                        {
+                            if (hitColliders[i].bounds.Contains(new Vector3(xIndex, yIndex, zIndex)))
+                            {
+                                Location adjacentLocation = new Location(new Vector3(xIndex, yIndex, zIndex), targetPosition, newLocation);
+                                closedList.Add(adjacentLocation);
+                                if (closedList.Any(x => x.PositionInWorld == targetPosition))
+                                {
+                                    closedList.Remove(adjacentLocation);
+                                }
+                            }
+                        }
+                    }
+                }
                 if (closedList.Any(x => x.PositionInWorld == targetPosition))
                 {
                     closedList.Remove(newLocation);
