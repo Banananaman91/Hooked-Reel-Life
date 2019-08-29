@@ -44,6 +44,7 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, rawGridPoint, false, SphereRadius,newPath => path = newPath));
             foreach (var location in path)
             {
+                if (location == rawGridPoint) break;
                 var tile = Instantiate(pathFinderTiles, location, Quaternion.identity);
                 pathVisualized.Add(tile);
             }

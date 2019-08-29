@@ -1,4 +1,5 @@
 using System;
+using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.PlayerControls;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -57,6 +58,13 @@ namespace TurnBasedAssets.Scripts.MouseController
                                 _selection = hit.collider.GetComponent<ISelection>();
                                 _selection.Select();
                             }
+                            
+                            else if (!hit.collider.GetComponent<ObjectPositioner>())
+                            {
+                                _selection?.DeSelect();
+                                var newTile = Instantiate(_selectedTile, _rawGridPoint, Quaternion.identity);
+                                _selection = newTile.GetComponent<ISelection>();
+                            }
                         }
                         
                         else
@@ -65,12 +73,6 @@ namespace TurnBasedAssets.Scripts.MouseController
                             var newTile = Instantiate(_selectedTile, _rawGridPoint, Quaternion.identity);
                             _selection = newTile.GetComponent<ISelection>();
                         }
-                    }
-
-                
-                    else
-                    {
-                        Debug.Log("This is too far away");
                     }
                 }
             }
