@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using TurnBasedAssets.Scripts.Interface;
+using TurnBasedAssets.Scripts.Pathfinding;
 
-namespace TurnBasedAssets.Scripts.PathFinding
+namespace TurnBasedAssets.Scripts.MessageBroker
 {
-    public class PathMessenger : PocoSingleton<PathMessenger>
+    public class MessageBroker : PocoSingleton<MessageBroker>
     {
         private Dictionary<Type, List<Delegate>> _messageMappings;
         
-        public PathMessenger()
+        public MessageBroker()
         {
             _messageMappings = new Dictionary<Type, List<Delegate>>();
         }
         
-        public void RegisterMessageOfType<T>(Action<T> messageHandler) where T : struct
+        public void RegisterMessageOfType<T>(Action<T> messageHandler)
         {
             var messageType = typeof(T);
             if(!_messageMappings.ContainsKey(messageType))
@@ -24,7 +24,7 @@ namespace TurnBasedAssets.Scripts.PathFinding
             _messageMappings[messageType].Add(messageHandler);
         }
 
-        public void SendMessageOfType<T>(T message) where T : struct
+        public void SendMessageOfType<T>(T message)
         {
             var messageType = typeof(T);
             if (!_messageMappings.ContainsKey(messageType)) return;
