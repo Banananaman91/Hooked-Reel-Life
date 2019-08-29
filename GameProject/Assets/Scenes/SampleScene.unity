@@ -152,7 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faaeb9496705714488daabf6228b383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseSelectionScript: {fileID: 601506082}
+  mouseSelectionScript: {fileID: 601506082}
+  pathFinderTiles: {fileID: 0}
+  movementSpeed: 0
+  rotationSpeed: 0
 --- !u!65 &18949652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -512,7 +515,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faaeb9496705714488daabf6228b383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseSelectionScript: {fileID: 601506082}
+  mouseSelectionScript: {fileID: 601506082}
+  pathFinderTiles: {fileID: 0}
+  movementSpeed: 0
+  rotationSpeed: 0
 --- !u!65 &587193362
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -617,11 +623,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 193045026}
   _mainCamera: {fileID: 534669904}
-  movableRadius: 10
-  distanceY: 5
-  offset: 1
-  gridSize: 1
-  selectedTile: {fileID: 5857300719643456642, guid: 22597ce1f6a820f4eace50179e30ccc5,
+  _movableRadius: 10
+  _distanceY: 5
+  _offset: 1
+  _gridSize: 1
+  _selectedTile: {fileID: 5857300719643456642, guid: 22597ce1f6a820f4eace50179e30ccc5,
     type: 3}
 --- !u!4 &601506083
 Transform:
@@ -712,7 +718,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faaeb9496705714488daabf6228b383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseSelectionScript: {fileID: 601506082}
+  mouseSelectionScript: {fileID: 601506082}
+  pathFinderTiles: {fileID: 0}
+  movementSpeed: 0
+  rotationSpeed: 0
 --- !u!65 &1554693231
 BoxCollider:
   m_ObjectHideFlags: 0
