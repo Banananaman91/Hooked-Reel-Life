@@ -1,11 +1,13 @@
 using System;
+using TurnBasedAssets.Scripts.PlayerControls;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.MouseController
 {
     public class MouseSelection : MonoBehaviour
     {
-        [SerializeField] private PlayerControls.PlayerController _player;
+        [SerializeField] private PlayerController _player;
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private float _movableRadius;
         [SerializeField] private float _distanceY;
