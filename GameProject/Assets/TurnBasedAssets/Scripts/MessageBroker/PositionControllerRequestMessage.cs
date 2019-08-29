@@ -8,9 +8,6 @@ namespace TurnBasedAssets.Scripts.MessageBroker
     {
         public Controller RequestingComponent { get; }
 
-        public PositionControllerRequestMessage(Controller requestingComponent)
-        {
-            RequestingComponent = requestingComponent;
-        }
+        public PositionControllerRequestMessage(Controller requestingComponent) => RequestingComponent = requestingComponent;
     }
 }

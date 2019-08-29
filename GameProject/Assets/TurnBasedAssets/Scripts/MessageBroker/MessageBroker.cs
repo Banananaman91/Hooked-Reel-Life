@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TurnBasedAssets.Scripts.PathFinding;
+using TurnBasedAssets.Scripts.Pathfinding;
 
 namespace TurnBasedAssets.Scripts.MessageBroker
 {

@@ -6,9 +6,9 @@ using TurnBasedAssets.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace TurnBasedAssets.Scripts.PathFinding
+namespace TurnBasedAssets.Scripts.Pathfinding
 {
-    public class PathFinder : IPathFinder
+    public class Pathfinder : IPathfinder
     {
         public List<Vector3> pathToFollow = new List<Vector3>();
 
@@ -31,43 +31,18 @@ namespace TurnBasedAssets.Scripts.PathFinding
             }
         }
 
-        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3D, float movementRadius, Action<IEnumerable<Vector3>> onCompletion)
+        public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3d, float movementRadius, Action<IEnumerable<Vector3>> onCompletion)
         {
             List<Location> openList = new List<Location>();
             List<Location> closedList = new List<Location>();
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
-            
-            Collider[] hitColliders = Physics.OverlapSphere(startPosition, movementRadius);
-            for (int i = 0; i < hitColliders.Length; i++)
+
+            List<Location> takenSpaces = GetTakenSpaces(startPosition, targetPosition, movementRadius);
+
+            foreach (var space in takenSpaces)
             {
-                var objectPosition = hitColliders[i].transform.position;
-                var objectScaleX = hitColliders[i].transform.localScale.x;
-                var objectScaleY = hitColliders[i].transform.localScale.y;
-                var objectScaleZ = hitColliders[i].transform.localScale.z;
-                Location newLocation = new Location(objectPosition, targetPosition, null);
-                for (float xIndex = objectPosition.x - objectScaleX; xIndex <= objectPosition.x + objectScaleX; xIndex++)
-                {
-                    for (float zIndex = objectPosition.z - objectScaleZ; zIndex <= objectPosition.z + objectScaleZ; zIndex++)
-                    {
-                        for (float yIndex = objectPosition.y - objectScaleY; yIndex <= objectPosition.y + objectScaleY; yIndex++)
-                        {
-                            if (hitColliders[i].bounds.Contains(new Vector3(xIndex, yIndex, zIndex)))
-                            {
-                                Location adjacentLocation = new Location(new Vector3(xIndex, yIndex, zIndex), targetPosition, newLocation);
-                                closedList.Add(adjacentLocation);
-                                if (closedList.Any(x => x.PositionInWorld == targetPosition))
-                                {
-                                    closedList.Remove(adjacentLocation);
-                                }
-                            }
-                        }
-                    }
-                }
-                if (closedList.Any(x => x.PositionInWorld == targetPosition))
-                {
-                    closedList.Remove(newLocation);
-                }
+                closedList.Add(space);
             }
 
             var adjacentSquares = new List<Location>();
@@ -88,25 +63,15 @@ namespace TurnBasedAssets.Scripts.PathFinding
                 }
 
                 adjacentSquares.Clear();
-                adjacentSquares = !is3D ? GetAdjacentSquares2D(currentLocation, targetPosition) : GetAdjacentSquares3D(currentLocation, targetPosition);
+                adjacentSquares = !is3d ? GetAdjacentSquares2D(currentLocation, targetPosition) : GetAdjacentSquares3D(currentLocation, targetPosition);
 
                 foreach (var adjacentSquare in adjacentSquares)
                 {
-                    if (closedList.Any(x => x.PositionInWorld == adjacentSquare.PositionInWorld)) // If the adjacentSqaure is in the closedList
-                    {
-                        continue;
-                    }
+                    if (closedList.Any(x => x.PositionInWorld == adjacentSquare.PositionInWorld)) continue;
 
-                    if (openList.All(x => x.PositionInWorld != adjacentSquare.PositionInWorld)) // If the adjacentSquare is not in the openList
-                    {
-                        openList.Add(adjacentSquare);
-                    }
+                    if (openList.All(x => x.PositionInWorld != adjacentSquare.PositionInWorld)) openList.Add(adjacentSquare);
 
-                    else if (adjacentSquare.F < openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).F)
-                    {
-                        openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).Parent =
-                            adjacentSquare;
-                    }
+                    else if (adjacentSquare.F < openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).F) openList.First(x => x.PositionInWorld == adjacentSquare.PositionInWorld).Parent = adjacentSquare;
                 }
 
                 yield return null;
@@ -165,6 +130,44 @@ namespace TurnBasedAssets.Scripts.PathFinding
             }
 
             return returnList;
+        }
+
+        private List<Location> GetTakenSpaces(Vector3 startPosition, Vector3 targetPosition, float movementRadius)
+        {
+            List<Location> closedList = new List<Location>();
+            Collider[] hitColliders = Physics.OverlapSphere(startPosition, movementRadius);
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                var objectPosition = hitColliders[i].transform.position;
+                var objectScaleX = hitColliders[i].transform.localScale.x;
+                var objectScaleY = hitColliders[i].transform.localScale.y;
+                var objectScaleZ = hitColliders[i].transform.localScale.z;
+                Location newLocation = new Location(objectPosition, targetPosition, null);
+                for (float xIndex = objectPosition.x - objectScaleX; xIndex <= objectPosition.x + objectScaleX; xIndex++)
+                {
+                    for (float zIndex = objectPosition.z - objectScaleZ; zIndex <= objectPosition.z + objectScaleZ; zIndex++)
+                    {
+                        for (float yIndex = objectPosition.y - objectScaleY; yIndex <= objectPosition.y + objectScaleY; yIndex++)
+                        {
+                            if (hitColliders[i].bounds.Contains(new Vector3(xIndex, yIndex, zIndex)))
+                            {
+                                Location adjacentLocation = new Location(new Vector3(xIndex, yIndex, zIndex), targetPosition, newLocation);
+                                closedList.Add(adjacentLocation);
+                                if (closedList.Any(x => x.PositionInWorld == targetPosition))
+                                {
+                                    closedList.Remove(adjacentLocation);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (closedList.Any(x => x.PositionInWorld == targetPosition))
+                {
+                    closedList.Remove(newLocation);
+                }
+            }
+
+            return closedList;
         }
     }
 }

@@ -1,15 +1,10 @@
 ﻿using TurnBasedAssets.Scripts.Interface;
 using TurnBasedAssets.Scripts.MessageBroker;
-using TurnBasedAssets.Scripts.MouseController;
-using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.Controllers
 {
     public class ObjectPositioner : Controller
     {
-        private IPosition _iPosition;
-        [SerializeField] private MouseSelection _mouseSelectionScript;
-
         private void Start()
         {
             MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
@@ -18,12 +13,12 @@ namespace TurnBasedAssets.Scripts.Controllers
 
         private void SetPosition()
         {
-            transform.position = _iPosition.RePosition(transform.position, _mouseSelectionScript.PlanePosition);
+            transform.position = Position.Reposition(transform.position, mouseSelectionScript.PlanePosition);
         }
 
         public override void Initialise(IPosition iPosition)
         {
-            _iPosition = iPosition;
+            Position = iPosition;
         }
     }
 }

@@ -6,9 +6,7 @@ namespace TurnBasedAssets.Scripts.MessageBroker
     {
         public PlayerController RequestingComponent { get; }
 
-        public PathFinderRequestMessage(PlayerController requestingComponent)
-        {
-            RequestingComponent = requestingComponent;
-        }
+        public PathFinderRequestMessage(PlayerController requestingComponent) => RequestingComponent = requestingComponent;
+        
     }
 }
