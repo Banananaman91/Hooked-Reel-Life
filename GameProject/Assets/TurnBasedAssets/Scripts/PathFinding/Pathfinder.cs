@@ -2,17 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.Interface;
+using TurnBasedAssets.Scripts.MessageBroker;
+using TurnBasedAssets.Scripts.PathFinding;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace TurnBasedAssets.Scripts.Pathfinding
 {
-    public class Pathfinder : IPathfinder
+    public class Pathfinder : IPathfinder, IObjectAvoidanceInitialisable
     {
         public List<Vector3> pathToFollow = new List<Vector3>();
-
         private float _2dMaxDistance = 1;
+        private ObjectAvoidance _avoider;
         public class Location
         {
             public Location Parent { get; set; }
@@ -33,17 +37,12 @@ namespace TurnBasedAssets.Scripts.Pathfinding
 
         public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3d, float movementRadius, Action<IEnumerable<Vector3>> onCompletion)
         {
+            MessageBroker.MessageBroker.Instance.SendMessageOfType(new ObjectRequestMessage(this));
             List<Location> openList = new List<Location>();
             List<Location> closedList = new List<Location>();
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
-
-            List<Location> takenSpaces = GetTakenSpaces(startPosition, targetPosition, movementRadius);
-
-            foreach (var space in takenSpaces)
-            {
-                closedList.Add(space);
-            }
+            var isObjectMoving = _avoider.Objects.First(x => x.transform.position == startPosition);
 
             var adjacentSquares = new List<Location>();
             openList.Add(startLocation);
@@ -63,7 +62,7 @@ namespace TurnBasedAssets.Scripts.Pathfinding
                 }
 
                 adjacentSquares.Clear();
-                adjacentSquares = !is3d ? GetAdjacentSquares2D(currentLocation, targetPosition) : GetAdjacentSquares3D(currentLocation, targetPosition);
+                adjacentSquares = !is3d ? GetAdjacentSquares2D(currentLocation, targetPosition, isObjectMoving) : GetAdjacentSquares3D(currentLocation, targetPosition);
 
                 foreach (var adjacentSquare in adjacentSquares)
                 {
@@ -94,7 +93,7 @@ namespace TurnBasedAssets.Scripts.Pathfinding
             onCompletion(pathToFollow);
         }
 
-        private List<Location> GetAdjacentSquares2D(Location point, Vector3 target)
+        private List<Location> GetAdjacentSquares2D(Location point, Vector3 target, Controller isObjectMoving)
         {
             List<Location> returnList = new List<Location>();
 
@@ -106,7 +105,12 @@ namespace TurnBasedAssets.Scripts.Pathfinding
                         new Location(new Vector3(xIndex, point.PositionInWorld.y, zIndex), target, point);
                     if (Vector3.Distance(point.PositionInWorld, adjacentVector.PositionInWorld) >
                         _2dMaxDistance) continue;
-                    returnList.Add(adjacentVector);
+
+                    bool isIntersecting = _avoider.Objects
+                        .Where(x => x!= isObjectMoving && Vector3.Distance(x.transform.position, adjacentVector.PositionInWorld) <=
+                                    Vector3.Distance(point.PositionInWorld, target)).Any(x => x.isTerrain? Vector3.Distance(x.terrainBounds.ClosestPoint(adjacentVector.PositionInWorld), adjacentVector.PositionInWorld) < 1 : x.renderBounds.bounds.Contains(adjacentVector.PositionInWorld));
+                    //x.VectorPositions.Any(y => Vector3.Distance(y, adjacentVector.PositionInWorld) <= 0.5)
+                    if (!isIntersecting) returnList.Add(adjacentVector);
                 }
             }
             return returnList;
@@ -132,42 +136,10 @@ namespace TurnBasedAssets.Scripts.Pathfinding
             return returnList;
         }
 
-        private List<Location> GetTakenSpaces(Vector3 startPosition, Vector3 targetPosition, float movementRadius)
+        
+        public void ObjectInitialise(ObjectAvoidance objectAvoider)
         {
-            List<Location> closedList = new List<Location>();
-            Collider[] hitColliders = Physics.OverlapSphere(startPosition, movementRadius);
-            for (int i = 0; i < hitColliders.Length; i++)
-            {
-                var objectPosition = hitColliders[i].transform.position;
-                var objectScaleX = hitColliders[i].transform.localScale.x;
-                var objectScaleY = hitColliders[i].transform.localScale.y;
-                var objectScaleZ = hitColliders[i].transform.localScale.z;
-                Location newLocation = new Location(objectPosition, targetPosition, null);
-                for (float xIndex = objectPosition.x - objectScaleX; xIndex <= objectPosition.x + objectScaleX; xIndex++)
-                {
-                    for (float zIndex = objectPosition.z - objectScaleZ; zIndex <= objectPosition.z + objectScaleZ; zIndex++)
-                    {
-                        for (float yIndex = objectPosition.y - objectScaleY; yIndex <= objectPosition.y + objectScaleY; yIndex++)
-                        {
-                            if (hitColliders[i].bounds.Contains(new Vector3(xIndex, yIndex, zIndex)))
-                            {
-                                Location adjacentLocation = new Location(new Vector3(xIndex, yIndex, zIndex), targetPosition, newLocation);
-                                closedList.Add(adjacentLocation);
-                                if (closedList.Any(x => x.PositionInWorld == targetPosition))
-                                {
-                                    closedList.Remove(adjacentLocation);
-                                }
-                            }
-                        }
-                    }
-                }
-                if (closedList.Any(x => x.PositionInWorld == targetPosition))
-                {
-                    closedList.Remove(newLocation);
-                }
-            }
-
-            return closedList;
+            _avoider = objectAvoider;
         }
     }
 }

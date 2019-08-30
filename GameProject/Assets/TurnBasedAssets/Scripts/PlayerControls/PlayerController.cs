@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.Interface;
 using TurnBasedAssets.Scripts.MessageBroker;
+using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PlayerControls
@@ -13,14 +14,17 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         private List<GameObject> pathVisualized = new List<GameObject>();
         private Vector3 previousLocation;
         private Vector3 previousDistance;
-
         private float SphereRadius => mouseSelectionScript.MoveableRadius;
-
+        
+        
         private void Start()
         {
             MessageBroker.MessageBroker.Instance.SendMessageOfType(new PathFinderRequestMessage(this));
             MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
             SetPosition();
+            AddToObjectAvoider();
+            //VertexLocations();
+            AvoidMe();
         }
 
         private void SetPosition()
@@ -28,19 +32,11 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             transform.position = Position.Reposition(transform.position, mouseSelectionScript.PlanePosition);
         }
 
-        public void Initialise(IPathfinder pathfinder)
-        {
-            Pathfinder = pathfinder;
-        }
-
-        public override void Initialise(IPosition iPosition)
-        {
-            Position = iPosition;
-        }
-
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             ClearTiles();
+            
+            
             yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, rawGridPoint, false, SphereRadius,newPath => path = newPath));
             foreach (var location in path)
             {
@@ -74,6 +70,12 @@ namespace TurnBasedAssets.Scripts.PlayerControls
             mouseSelectionScript.enabled = true;
             ClearTiles();
             mouseSelectionScript.Selection.DeSelect();
+            VectorPositions.Clear();
+            //VertexLocations();
+            foreach (var vector in VectorPositions)
+            {
+                Debug.Log(gameObject.name + vector);
+            }
             yield return null;
             
         }

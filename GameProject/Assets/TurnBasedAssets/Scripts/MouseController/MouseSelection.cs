@@ -1,4 +1,5 @@
 using System;
+using TurnBasedAssets.Scripts.Controllers;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.MouseController
@@ -54,6 +55,13 @@ namespace TurnBasedAssets.Scripts.MouseController
                             {
                                 _selection = hit.collider.GetComponent<ISelection>();
                                 _selection.Select();
+                            }
+                            
+                            else if (!hit.collider.GetComponent<ObjectPositioner>())
+                            {
+                                _selection?.DeSelect();
+                                var newTile = Instantiate(_selectedTile, _rawGridPoint, Quaternion.identity);
+                                _selection = newTile.GetComponent<ISelection>();
                             }
                         }
                         

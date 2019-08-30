@@ -1,5 +1,6 @@
 ﻿using TurnBasedAssets.Scripts.Interface;
 using TurnBasedAssets.Scripts.MessageBroker;
+using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.Controllers
 {
@@ -9,16 +10,14 @@ namespace TurnBasedAssets.Scripts.Controllers
         {
             MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
             SetPosition();
+            AddToObjectAvoider();
+            //VertexLocations();
+            AvoidMe();
         }
 
         private void SetPosition()
         {
             transform.position = Position.Reposition(transform.position, mouseSelectionScript.PlanePosition);
-        }
-
-        public override void Initialise(IPosition iPosition)
-        {
-            Position = iPosition;
         }
     }
 }
