@@ -23,22 +23,25 @@ namespace TurnBasedAssets.Scripts.MouseController
         public Vector3 PlanePosition => _distanceFromCamera;
         public Vector3 CameraPosition => _mainCamera.transform.position;
         public Vector3 RawGridPoint => _rawGridPoint;
+
         public ISelection Selection
         {
             get => _selection;
             set => _selection = value;
         }
+
         public float MoveableRadius => _movableRadius;
 
 
         private void Awake()
         {
-            _mainCamera.transform.position = new Vector3(CameraPosition.x,(int)Math.Round((CameraPosition.y)),CameraPosition.z);
+            _mainCamera.transform.position =
+                new Vector3(CameraPosition.x, (int) Math.Round((CameraPosition.y)), CameraPosition.z);
             var position = Camera.main.transform.position;
-            _distanceFromCamera = new Vector3(position.x, position.y - _distanceY,position.z);
+            _distanceFromCamera = new Vector3(position.x, position.y - _distanceY, position.z);
             _plane = new Plane(Vector3.up, _distanceFromCamera);
         }
-        
+
 
         private void Update()
         {
@@ -46,40 +49,38 @@ namespace TurnBasedAssets.Scripts.MouseController
             if (_plane.Raycast(ray, out float gridSpace))
             {
                 _rawGridPoint = CalculateGridPoint(ray, gridSpace);
+            }
 
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                if (Vector3.Distance(_player.transform.position, _rawGridPoint) <= _movableRadius)
                 {
-                    if (Vector3.Distance(_player.transform.position, _rawGridPoint) <= _movableRadius)
+                    if (Physics.Raycast(ray, out RaycastHit hit))
                     {
-                        if (Physics.Raycast(ray, out RaycastHit hit))
+                        if (hit.collider.GetComponent<ISelection>() != null)
                         {
-                            if (hit.collider.GetComponent<ISelection>() != null)
-                            {
-                                _selection = hit.collider.GetComponent<ISelection>();
-                                _selection.Select();
-                            }
-                            
-                            else if (!hit.collider.GetComponent<ObjectPositioner>())
-                            {
-                                _selection?.DeSelect();
-                                var newTile = Instantiate(_selectedTile, _rawGridPoint, Quaternion.identity);
-                                _selection = newTile.GetComponent<ISelection>();
-                            }
+                            _selection = hit.collider.GetComponent<ISelection>();
+                            _selection.Select();
                         }
-                        
-                        else
+
+                        else if (!hit.collider.GetComponent<ObjectPositioner>())
                         {
                             _selection?.DeSelect();
                             var newTile = Instantiate(_selectedTile, _rawGridPoint, Quaternion.identity);
                             _selection = newTile.GetComponent<ISelection>();
                         }
                     }
+
+                    else
+                    {
+                        _selection?.DeSelect();
+                        var newTile = Instantiate(_selectedTile, _rawGridPoint, Quaternion.identity);
+                        _selection = newTile.GetComponent<ISelection>();
+                    }
                 }
             }
         }
-
-
-
+        
         public Vector3 CalculateGridPoint(Ray ray, float gridSpace)
         {
             Vector3 gridPoint;
