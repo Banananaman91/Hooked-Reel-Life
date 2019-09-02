@@ -1,7 +1,7 @@
 ﻿using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.Interface;
 
-namespace TurnBasedAssets.Scripts.MessageBroker
+namespace TurnBasedAssets.Scripts.GameMessengerUtilities
 {
     public struct ObjectRequestMessage
     {

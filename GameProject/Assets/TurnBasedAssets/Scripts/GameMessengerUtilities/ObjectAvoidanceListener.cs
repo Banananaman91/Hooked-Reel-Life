@@ -1,7 +1,7 @@
 ﻿using TurnBasedAssets.Scripts.PathFinding;
 using UnityEngine;
 
-namespace TurnBasedAssets.Scripts.MessageBroker
+namespace TurnBasedAssets.Scripts.GameMessengerUtilities
 {
     public class ObjectAvoidanceListener : MonoBehaviour
     {

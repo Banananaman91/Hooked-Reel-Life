@@ -1,7 +1,7 @@
 ﻿using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.PlayerControls;
 
-namespace TurnBasedAssets.Scripts.MessageBroker
+namespace TurnBasedAssets.Scripts.GameMessengerUtilities
 {
     public struct PathFinderRequestMessage
     {

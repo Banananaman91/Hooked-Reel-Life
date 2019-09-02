@@ -20,12 +20,8 @@ namespace TurnBasedAssets.Scripts.SelectedTile
             StartCoroutine(_playerController.FindPossibleMovePositions(_mouseSelection.RawGridPoint));
         }
 
-        public void Select()
-        {
-            StartCoroutine(_playerController.StartPlayerMovement());
-        }
-
-   
+        public void Select() => StartCoroutine(_playerController.StartPlayerMovement());
+        
         public void DeSelect()
         {
             _mouseSelection.Selection = null;

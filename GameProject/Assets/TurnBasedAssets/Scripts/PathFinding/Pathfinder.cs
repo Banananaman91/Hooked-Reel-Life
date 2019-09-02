@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TurnBasedAssets.Scripts.Controllers;
 using TurnBasedAssets.Scripts.Interface;
-using TurnBasedAssets.Scripts.MessageBroker;
+using TurnBasedAssets.Scripts.GameMessengerUtilities;
 using TurnBasedAssets.Scripts.PathFinding;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -17,27 +17,10 @@ namespace TurnBasedAssets.Scripts.Pathfinding
         private List<Vector3> _pathToFollow = new List<Vector3>();
         private float _2dMaxDistance = 1;
         private ObjectAvoidance _avoidance;
-        public class Location
-        {
-            public Location Parent { get; set; }
-            public Vector3 PositionInWorld { get; }
-
-            private float G => Parent?.G + 1 ?? 0;
-            private float H { get; }
-            public float F => Mathf.Round(G + H);
-
-
-            public Location(Vector3 position, Vector3 destination, Location parent)
-            {
-                Parent = parent;
-                PositionInWorld = position;
-                H = Vector3.Distance(position, destination);
-            }
-        }
 
         public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, bool is3d, float movementRadius, Action<IEnumerable<Vector3>> onCompletion)
         {
-            MessageBroker.MessageBroker.Instance.SendMessageOfType(new ObjectRequestMessage(this));
+            GameMessengerUtilities.MessageBroker.Instance.SendMessageOfType(new ObjectRequestMessage(this));
             List<Location> openList = new List<Location>();
             List<Location> closedList = new List<Location>();
             Location currentLocation;

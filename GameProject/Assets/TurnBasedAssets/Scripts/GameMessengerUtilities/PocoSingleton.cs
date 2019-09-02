@@ -1,4 +1,4 @@
-﻿namespace TurnBasedAssets.Scripts.MessageBroker
+﻿namespace TurnBasedAssets.Scripts.GameMessengerUtilities
 {
     public abstract class PocoSingleton<T> where T : class, new()
     {

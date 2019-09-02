@@ -2,7 +2,7 @@
 using TurnBasedAssets.Scripts.PlayerControls;
 using UnityEngine;
 
-namespace TurnBasedAssets.Scripts.MessageBroker
+namespace TurnBasedAssets.Scripts.GameMessengerUtilities
 {
     public class PositionControllerRequestMessage
     {
