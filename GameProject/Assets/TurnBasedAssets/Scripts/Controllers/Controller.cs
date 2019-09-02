@@ -9,7 +9,7 @@ namespace TurnBasedAssets.Scripts.Controllers
     [RequireComponent(typeof(Renderer))]
     public class Controller : MonoBehaviour, IObjectAvoidanceInitialisable
     {
-        internal IPathfinder Pathfinder;
+        protected IPathfinder Pathfinder;
         private IPosition _position;
         private ObjectAvoidance _avoidance;
         private Renderer _renderBounds;
