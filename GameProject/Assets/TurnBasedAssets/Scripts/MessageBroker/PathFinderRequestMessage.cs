@@ -1,12 +1,13 @@
-﻿using TurnBasedAssets.Scripts.PlayerControls;
+﻿using TurnBasedAssets.Scripts.Controllers;
+using TurnBasedAssets.Scripts.PlayerControls;
 
 namespace TurnBasedAssets.Scripts.MessageBroker
 {
     public struct PathFinderRequestMessage
     {
-        public PlayerController RequestingComponent { get; }
+        public Controller RequestingComponent { get; }
 
-        public PathFinderRequestMessage(PlayerController requestingComponent) => RequestingComponent = requestingComponent;
+        public PathFinderRequestMessage(Controller requestingComponent) => RequestingComponent = requestingComponent;
         
     }
 }

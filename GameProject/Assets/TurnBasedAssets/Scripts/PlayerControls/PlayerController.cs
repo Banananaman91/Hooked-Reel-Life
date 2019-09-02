@@ -1,52 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TurnBasedAssets.Scripts.Controllers;
-using TurnBasedAssets.Scripts.Interface;
-using TurnBasedAssets.Scripts.MessageBroker;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.PlayerControls
 {
     public class PlayerController : Controller
     {
-        private IEnumerable<Vector3> path = new List<Vector3>();
-        private List<GameObject> pathVisualized = new List<GameObject>();
-        private Vector3 previousLocation;
-        private Vector3 previousDistance;
-
-        private float SphereRadius => mouseSelectionScript.MoveableRadius;
-
-        private void Start()
-        {
-            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PathFinderRequestMessage(this));
-            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
-            SetPosition();
-        }
-
-        private void SetPosition()
-        {
-            transform.position = Position.Reposition(transform.position, mouseSelectionScript.PlanePosition);
-        }
-
-        public void Initialise(IPathfinder pathfinder)
-        {
-            Pathfinder = pathfinder;
-        }
-
-        public override void Initialise(IPosition iPosition)
-        {
-            Position = iPosition;
-        }
-
+        private IEnumerable<Vector3> _path = new List<Vector3>();
+        private List<GameObject> _pathVisualized = new List<GameObject>();
+        private Vector3 _previousLocation;
+        private Vector3 _previousDistance;
+        private float SphereRadius => mouseSelectionScript.MovableRadius;
+        
         public IEnumerator FindPossibleMovePositions(Vector3 rawGridPoint)
         {
             ClearTiles();
-            yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, rawGridPoint, false, SphereRadius,newPath => path = newPath));
-            foreach (var location in path)
+            yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, rawGridPoint, false, SphereRadius,newPath => _path = newPath));
+            foreach (var location in _path)
             {
                 if (location == rawGridPoint) break;
                 var tile = Instantiate(pathFinderTiles, location, Quaternion.identity);
-                pathVisualized.Add(tile);
+                _pathVisualized.Add(tile);
             }
             yield return null;
         }
@@ -54,10 +29,10 @@ namespace TurnBasedAssets.Scripts.PlayerControls
         public IEnumerator StartPlayerMovement()
         {
             mouseSelectionScript.enabled = false;
-            foreach (var location in path)
+            foreach (var location in _path)
             {
-                Vector3 locationDistance = location - previousLocation;
-                if (locationDistance != previousDistance)
+                Vector3 locationDistance = location - _previousLocation;
+                if (locationDistance != _previousDistance)
                 {
                     yield return StartCoroutine(RotatePlayer(location));
                 }
@@ -67,11 +42,10 @@ namespace TurnBasedAssets.Scripts.PlayerControls
                     yield return StartCoroutine(MoveToNextTile(location));
                 }
 
-                previousDistance = location - previousLocation;
-                previousLocation = location;
+                _previousDistance = location - _previousLocation;
+                _previousLocation = location;
 
             }
-
             mouseSelectionScript.enabled = true;
             ClearTiles();
             mouseSelectionScript.Selection.DeSelect();
@@ -98,12 +72,12 @@ namespace TurnBasedAssets.Scripts.PlayerControls
 
         private void ClearTiles()
         {
-            foreach (GameObject tile in pathVisualized)
+            foreach (GameObject tile in _pathVisualized)
             {
                 Destroy(tile);
             }
 
-            pathVisualized.Clear();
+            _pathVisualized.Clear();
         }
     }
 }
