@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,15 +69,11 @@ namespace TurnBasedAssets.Scripts.Dialogue
                     }
                 }
 
-                if (!_dialogueBox.activeSelf)
-                {
-                    _dialogueBox.SetActive(true);
-                }
+                if (!_dialogueBox.activeSelf) _dialogueBox.SetActive(true);
+                
 
-                if (IsPreviousImageNotNull)
-                {
-                    Destroy(_previousImage.gameObject);
-                }
+                if (IsPreviousImageNotNull) Destroy(_previousImage.gameObject);
+                
 
                 if (IsNewMoodImageNotNull)
                 {
