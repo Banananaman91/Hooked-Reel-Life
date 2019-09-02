@@ -14,9 +14,9 @@ namespace TurnBasedAssets.Scripts.Pathfinding
 {
     public class Pathfinder : IPathfinder, IObjectAvoidanceInitialisable
     {
-        public List<Vector3> pathToFollow = new List<Vector3>();
+        private List<Vector3> _pathToFollow = new List<Vector3>();
         private float _2dMaxDistance = 1;
-        private ObjectAvoidance _avoider;
+        private ObjectAvoidance _avoidance;
         public class Location
         {
             public Location Parent { get; set; }
@@ -42,7 +42,7 @@ namespace TurnBasedAssets.Scripts.Pathfinding
             List<Location> closedList = new List<Location>();
             Location currentLocation;
             Location startLocation = new Location(startPosition, targetPosition, null);
-            var isObjectMoving = _avoider.Objects.First(x => x.transform.position == startPosition);
+            var isObjectMoving = _avoidance.Objects.First(x => x.transform.position == startPosition);
 
             var adjacentSquares = new List<Location>();
             openList.Add(startLocation);
@@ -62,7 +62,7 @@ namespace TurnBasedAssets.Scripts.Pathfinding
                 }
 
                 adjacentSquares.Clear();
-                adjacentSquares = !is3d ? GetAdjacentSquares2D(currentLocation, targetPosition, isObjectMoving) : GetAdjacentSquares3D(currentLocation, targetPosition);
+                adjacentSquares = !is3d ? GetAdjacentSquares2D(currentLocation, targetPosition, isObjectMoving) : GetAdjacentSquares3D(currentLocation, targetPosition, isObjectMoving);
 
                 foreach (var adjacentSquare in adjacentSquares)
                 {
@@ -76,21 +76,21 @@ namespace TurnBasedAssets.Scripts.Pathfinding
                 yield return null;
             }
 
-            pathToFollow.Clear();
+            _pathToFollow.Clear();
 
             var current = closedList.Last();
 
-            pathToFollow.Add(current.PositionInWorld);
+            _pathToFollow.Add(current.PositionInWorld);
             
             do
             {
-                pathToFollow.Add(current.Parent.PositionInWorld);
+                _pathToFollow.Add(current.Parent.PositionInWorld);
                 current = current.Parent;
-            } while (!pathToFollow.Contains(startPosition));
+            } while (!_pathToFollow.Contains(startPosition));
 
-            pathToFollow.Reverse();
+            _pathToFollow.Reverse();
 
-            onCompletion(pathToFollow);
+            onCompletion(_pathToFollow);
         }
 
         private List<Location> GetAdjacentSquares2D(Location point, Vector3 target, Controller isObjectMoving)
@@ -106,17 +106,16 @@ namespace TurnBasedAssets.Scripts.Pathfinding
                     if (Vector3.Distance(point.PositionInWorld, adjacentVector.PositionInWorld) >
                         _2dMaxDistance) continue;
 
-                    bool isIntersecting = _avoider.Objects
+                    bool isIntersecting = _avoidance.Objects
                         .Where(x => x!= isObjectMoving && Vector3.Distance(x.transform.position, adjacentVector.PositionInWorld) <=
-                                    Vector3.Distance(point.PositionInWorld, target)).Any(x => x.isTerrain? Vector3.Distance(x.terrainBounds.ClosestPoint(adjacentVector.PositionInWorld), adjacentVector.PositionInWorld) < 1 : x.renderBounds.bounds.Contains(adjacentVector.PositionInWorld));
-                    //x.VectorPositions.Any(y => Vector3.Distance(y, adjacentVector.PositionInWorld) <= 0.5)
+                                    Vector3.Distance(point.PositionInWorld, target)).Any(x => x.RenderBounds.bounds.Contains(adjacentVector.PositionInWorld));
                     if (!isIntersecting) returnList.Add(adjacentVector);
                 }
             }
             return returnList;
         }
         
-        private List<Location> GetAdjacentSquares3D(Location point, Vector3 target)
+        private List<Location> GetAdjacentSquares3D(Location point, Vector3 target, Controller isObjectMoving)
         {
             List<Location> returnList = new List<Location>();
 
@@ -128,18 +127,20 @@ namespace TurnBasedAssets.Scripts.Pathfinding
                     {
                         var adjacentVector = new Location(new Vector3(xIndex, yIndex, zIndex), target,
                             point);
-                        returnList.Add(adjacentVector);
+                        bool isIntersecting = _avoidance.Objects
+                            .Where(x => x!= isObjectMoving && Vector3.Distance(x.transform.position, adjacentVector.PositionInWorld) <=
+                                        Vector3.Distance(point.PositionInWorld, target)).Any(x => x.RenderBounds.bounds.Contains(adjacentVector.PositionInWorld));
+                        if (!isIntersecting) returnList.Add(adjacentVector);
                     }
                 }
             }
 
             return returnList;
         }
-
         
-        public void ObjectInitialise(ObjectAvoidance objectAvoider)
+        public void ObjectInitialise(ObjectAvoidance objectAvoidance)
         {
-            _avoider = objectAvoider;
+            _avoidance = objectAvoidance;
         }
     }
 }

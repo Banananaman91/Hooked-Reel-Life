@@ -19,14 +19,14 @@ namespace TurnBasedAssets.Scripts.MouseController
         private Vector3 _previousGridPoint;
         private Vector3 _distanceFromCamera;
         public Vector3 PlanePosition => _distanceFromCamera;
-        public Vector3 CameraPosition => _mainCamera.transform.position;
+        private Vector3 CameraPosition => _mainCamera.transform.position;
         public Vector3 RawGridPoint => _rawGridPoint;
         public ISelection Selection
         {
             get => _selection;
             set => _selection = value;
         }
-        public float MoveableRadius => _movableRadius;
+        public float MovableRadius => _movableRadius;
 
 
         private void Awake()
@@ -72,8 +72,7 @@ namespace TurnBasedAssets.Scripts.MouseController
                             _selection = newTile.GetComponent<ISelection>();
                         }
                     }
-
-                
+                    
                     else
                     {
                         Debug.Log("This is too far away");

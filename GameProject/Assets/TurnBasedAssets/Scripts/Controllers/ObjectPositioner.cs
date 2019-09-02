@@ -6,18 +6,6 @@ namespace TurnBasedAssets.Scripts.Controllers
 {
     public class ObjectPositioner : Controller
     {
-        private void Start()
-        {
-            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
-            SetPosition();
-            AddToObjectAvoider();
-            //VertexLocations();
-            AvoidMe();
-        }
-
-        private void SetPosition()
-        {
-            transform.position = Position.Reposition(transform.position, mouseSelectionScript.PlanePosition);
-        }
+        //for objects to reposition themselves as declared in Controller type
     }
 }

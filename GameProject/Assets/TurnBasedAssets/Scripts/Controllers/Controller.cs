@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TurnBasedAssets.Scripts.Interface;
+﻿using TurnBasedAssets.Scripts.Interface;
 using TurnBasedAssets.Scripts.MessageBroker;
 using TurnBasedAssets.Scripts.MouseController;
 using TurnBasedAssets.Scripts.PathFinding;
@@ -11,54 +9,64 @@ namespace TurnBasedAssets.Scripts.Controllers
     public class Controller : MonoBehaviour, IObjectAvoidanceInitialisable
     {
         internal IPathfinder Pathfinder;
-        internal IPosition Position;
-        private ObjectAvoidance _avoider;
+        private IPosition _position;
+        private ObjectAvoidance _avoidance;
         [SerializeField] internal MouseSelection mouseSelectionScript;
         [SerializeField] internal GameObject pathFinderTiles;
         [SerializeField] internal float movementSpeed;
         [SerializeField] internal float rotationSpeed;
-        [SerializeField] internal bool isTerrain;
-        public Renderer renderBounds => GetComponent<Renderer>();
-        //public Mesh Mesh => GetComponent<MeshFilter>().mesh;
-        private ObjectAvoidance objectAvoider;
-        //private List<Vector3> MeshVertices => new List<Vector3>(Mesh.vertices);
-        public List<Vector3> VectorPositions = new List<Vector3>();
-        public TerrainData TerrainData => isTerrain ? GetComponent<Terrain>().terrainData : null;
-        
-        public Bounds terrainBounds => new Bounds(TerrainData.bounds.center + transform.position, TerrainData.bounds.size);
- 
-//        public void VertexLocations()
-//        {
-//            foreach (var vertex in MeshVertices)
-//            {
-//                var verteces = transform.TransformPoint(vertex);
-//                VectorPositions.Add(verteces);
-//            }
-//        }
+        public Renderer RenderBounds => GetComponent<Renderer>();
 
-        public void AvoidMe()
+        public void Start()
         {
-            _avoider.Objects.Add(this);
+            GetPathfinder();
+            GetObjectReposition();
+            SetPosition();
+            AddToObjectAvoidance();
+            AvoidMe();
         }
 
-        public void AddToObjectAvoider()
+        private void GetPathfinder()
         {
+            //uses message broker to return pathfinder delegate
+            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PathFinderRequestMessage(this));
+        }
+
+        private void GetObjectReposition()
+        {
+            //uses message broker to return object reposition delegate
+            MessageBroker.MessageBroker.Instance.SendMessageOfType(new PositionControllerRequestMessage(this));
+        }
+
+        private void AvoidMe()
+        {
+            _avoidance.Objects.Add(this);
+        }
+
+        private void AddToObjectAvoidance()
+        {
+            //uses message broker to return object avoidance delegate
             MessageBroker.MessageBroker.Instance.SendMessageOfType(new ObjectRequestMessage(this));
         }
-        
-        public void ObjectInitialise(ObjectAvoidance objectAvoider)
+
+        public void ObjectInitialise(ObjectAvoidance objectAvoidance)
         {
-            _avoider = objectAvoider;
+            _avoidance = objectAvoidance;
         }
         
-        public void PositionInitialise(IPosition iPosition)
+        public void PositionInitialise(IPosition position)
         {
-            Position = iPosition;
+            _position = position;
         }
         
         public void PathInitialise(IPathfinder pathfinder)
         {
             Pathfinder = pathfinder;
+        }
+        
+        private void SetPosition()
+        {
+            transform.position = _position.Reposition(transform.position, mouseSelectionScript.PlanePosition);
         }
     }
 }

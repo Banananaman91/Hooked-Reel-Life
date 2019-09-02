@@ -4,6 +4,6 @@ namespace TurnBasedAssets.Scripts.Interface
 {
     public interface IObjectAvoidanceInitialisable
     {
-        void ObjectInitialise(ObjectAvoidance objectAvoider);
+        void ObjectInitialise(ObjectAvoidance objectAvoidance);
     }
 }
