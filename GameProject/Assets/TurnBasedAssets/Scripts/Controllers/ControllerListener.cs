@@ -7,6 +7,6 @@ namespace TurnBasedAssets.Scripts.Controllers
     {
         private void Awake() => MessageBroker.MessageBroker.Instance.RegisterMessageOfType<PositionControllerRequestMessage>(OnPositionControllerComponentRequestMessage);
         
-        private void OnPositionControllerComponentRequestMessage(PositionControllerRequestMessage positionControllerRequestMessage) => positionControllerRequestMessage.RequestingComponent.Initialise(new PositionController());
+        private void OnPositionControllerComponentRequestMessage(PositionControllerRequestMessage positionControllerRequestMessage) => positionControllerRequestMessage.RequestingComponent.PositionInitialise(new PositionController());
     }
 }

@@ -7,6 +7,6 @@ namespace TurnBasedAssets.Scripts.Pathfinding
     {
         private void Awake() => MessageBroker.MessageBroker.Instance.RegisterMessageOfType<PathFinderRequestMessage>(OnPathFinderComponentRequestMessage);
         
-        private void OnPathFinderComponentRequestMessage(PathFinderRequestMessage message) => message.RequestingComponent.Initialise(new Pathfinder());
+        private void OnPathFinderComponentRequestMessage(PathFinderRequestMessage message) => message.RequestingComponent.PathInitialise(new Pathfinder());
     }
 }

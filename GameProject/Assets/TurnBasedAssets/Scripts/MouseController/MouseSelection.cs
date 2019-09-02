@@ -1,7 +1,5 @@
 using System;
 using TurnBasedAssets.Scripts.Controllers;
-using TurnBasedAssets.Scripts.PlayerControls;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.MouseController
@@ -21,7 +19,7 @@ namespace TurnBasedAssets.Scripts.MouseController
         private Vector3 _previousGridPoint;
         private Vector3 _distanceFromCamera;
         public Vector3 PlanePosition => _distanceFromCamera;
-        public Vector3 CameraPosition => _mainCamera.transform.position;
+        private Vector3 CameraPosition => _mainCamera.transform.position;
         public Vector3 RawGridPoint => _rawGridPoint;
 
         public ISelection Selection
@@ -29,8 +27,7 @@ namespace TurnBasedAssets.Scripts.MouseController
             get => _selection;
             set => _selection = value;
         }
-
-        public float MoveableRadius => _movableRadius;
+        public float MovableRadius => _movableRadius;
 
 
         private void Awake()
