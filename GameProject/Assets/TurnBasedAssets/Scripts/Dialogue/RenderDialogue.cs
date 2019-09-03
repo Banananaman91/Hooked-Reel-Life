@@ -49,46 +49,47 @@ namespace TurnBasedAssets.Scripts.Dialogue
             if (paragraphNumber < 0)
             {
                 EndDialogue();
+                return;
             }
-            else
+
+            foreach (var npcImageMoods in npcImages.NpcImage)
             {
-                foreach (var npcImageMoods in npcImages.NpcImage)
+                var npcImageName = npcImageMoods.NpcName.ToLower();
+                if (npcImageName.Contains(npcDialogue.NpcName.ToLower()))
                 {
-                    var npcImageName = npcImageMoods.NpcName.ToLower();
-                    if (npcImageName.Contains(npcDialogue.NpcName.ToLower()))
-                    {
-                        _npcImageMoods = npcImageMoods;
-                    }
+                    _npcImageMoods = npcImageMoods;
                 }
-                foreach (var npcMood in _npcImageMoods.NpcMoodImages)
-                {
-                    var npcMoodName = npcMood.name.ToLower();
-                    if (npcMoodName.Contains(npcDialogue.Messages[paragraphNumber].NpcMood.ToLower()))
-                    {
-                        _newMoodImage = npcMood;
-                    }
-                }
-
-                if (!_dialogueBox.activeSelf) _dialogueBox.SetActive(true);
-                
-
-                if (IsPreviousImageNotNull) Destroy(_previousImage.gameObject);
-                
-
-                if (IsNewMoodImageNotNull)
-                {
-                    var newImage = Instantiate(_newMoodImage, _pageImagePosition.transform);
-                    newImage.transform.SetParent(_dialogueBackground.transform);
-                    _previousImage = newImage;
-                }
-                if (IsCurrentRoutineNotNull) StopCoroutine(_currentRoutine);
-                _pageName.text = string.Empty;
-                _pageText.text = string.Empty;
-
-                _currentRoutine = StartCoroutine(Play(npcDialogue, npcDialogue.Messages[paragraphNumber]));
-                GetResponse(npcDialogue, npcDialogue.Messages[paragraphNumber], npcImages);
-
             }
+
+            foreach (var npcMood in _npcImageMoods.NpcMoodImages)
+            {
+                var npcMoodName = npcMood.name.ToLower();
+                if (npcMoodName.Contains(npcDialogue.Messages[paragraphNumber].NpcMood.ToLower()))
+                {
+                    _newMoodImage = npcMood;
+                }
+            }
+
+            if (!_dialogueBox.activeSelf) _dialogueBox.SetActive(true);
+
+
+            if (IsPreviousImageNotNull) Destroy(_previousImage.gameObject);
+
+
+            if (IsNewMoodImageNotNull)
+            {
+                var newImage = Instantiate(_newMoodImage, _pageImagePosition.transform);
+                newImage.transform.SetParent(_dialogueBackground.transform);
+                _previousImage = newImage;
+            }
+
+            if (IsCurrentRoutineNotNull) StopCoroutine(_currentRoutine);
+            _pageName.text = string.Empty;
+            _pageText.text = string.Empty;
+
+            _currentRoutine = StartCoroutine(Play(npcDialogue, npcDialogue.Messages[paragraphNumber]));
+            GetResponse(npcDialogue, npcDialogue.Messages[paragraphNumber], npcImages);
+
         }
 
         private void GetResponse(Dialogue npcMessage, Message npcResponses, NpcImages npcImages)
