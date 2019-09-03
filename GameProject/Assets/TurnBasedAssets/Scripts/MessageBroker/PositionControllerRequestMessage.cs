@@ -1,5 +1,5 @@
 ﻿using TurnBasedAssets.Scripts.Controllers;
-using TurnBasedAssets.Scripts.PlayerControls;
+using TurnBasedAssets.Scripts.Characters.PlayerControls;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.MessageBroker

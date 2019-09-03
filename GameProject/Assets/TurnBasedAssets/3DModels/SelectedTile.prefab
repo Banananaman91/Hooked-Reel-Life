@@ -106,4 +106,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 0}
+  _npcController: {fileID: 0}
   _mouseSelection: {fileID: 0}

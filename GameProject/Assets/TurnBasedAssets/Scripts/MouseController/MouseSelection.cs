@@ -1,5 +1,6 @@
 using System;
 using TurnBasedAssets.Scripts.Controllers;
+using TurnBasedAssets.Scripts.Characters.PlayerControls;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.MouseController
