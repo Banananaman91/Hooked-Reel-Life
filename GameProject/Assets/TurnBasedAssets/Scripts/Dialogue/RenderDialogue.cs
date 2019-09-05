@@ -41,7 +41,6 @@ namespace TurnBasedAssets.Scripts.Dialogue
                 RenderPageText(npc.NpcName, sb.ToString());
                 yield return new WaitForSeconds(_sentenceSpeed);
             }
-            yield return null;
         }
 
         public void PlayParagraphCycle(Dialogue npcDialogue, NpcImages npcImages, int paragraphNumber)

@@ -14,10 +14,8 @@ namespace TurnBasedAssets.Scripts.Dialogue
         [SerializeField] private RenderDialogue _pageRender;
         [SerializeField] private int _startMessage;
         
-        public void Select()
-        {
-            _pageRender.PlayParagraphCycle(_dialogue, _npcImages,_startMessage);
-        }
+        public void Select() => _pageRender.PlayParagraphCycle(_dialogue, _npcImages,_startMessage);
+        
 
         public void DeSelect()
         {
