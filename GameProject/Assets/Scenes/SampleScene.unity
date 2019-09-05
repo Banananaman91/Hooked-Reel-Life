@@ -323,16 +323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d28747c4c143d9a5ce3440f95a3b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-
-  _player: {fileID: 0}
-  _mainCamera: {fileID: 534669904}
-  _movableRadius: 10
-  _distanceY: 5
-  _offset: 1
-  _gridSize: 1
-  _selectedTile: {fileID: 5857300719643456642, guid: 22597ce1f6a820f4eace50179e30ccc5,
-    type: 3}
-
+  _cube: {fileID: 0}
+  _distanceY: -10
+  _offset: 5
+  _gridSize: 5
+  _camera: {fileID: 534669904}
 --- !u!4 &601506083
 Transform:
   m_ObjectHideFlags: 0
@@ -347,4 +342,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
