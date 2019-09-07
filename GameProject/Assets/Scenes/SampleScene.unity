@@ -153,9 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSelectionScript: {fileID: 601506082}
-  pathFinderTiles: {fileID: 0}
-  movementSpeed: 0
-  rotationSpeed: 0
 --- !u!65 &18949652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -345,7 +342,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -7.4266697e+34}
+  m_BoundingSphereOverride: {x: 0, y: 0.026750982, z: 0.05131668, w: 31.946499}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -382,10 +379,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSelectionScript: {fileID: 601506082}
-  pathFinderTiles: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
-    type: 3}
   movementSpeed: 2
   rotationSpeed: 150
+  _characterType: 0
+  pathTilePrefab: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
+    type: 3}
+  _playerFinishedMove: 0
+  _turnStarted: 0
 --- !u!136 &193045027
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -671,9 +671,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSelectionScript: {fileID: 601506082}
-  pathFinderTiles: {fileID: 0}
-  movementSpeed: 0
-  rotationSpeed: 0
 --- !u!65 &587193362
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -860,11 +857,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSelectionScript: {fileID: 601506082}
-  pathFinderTiles: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
-    type: 3}
   movementSpeed: 2
   rotationSpeed: 150
-  _goalDestination: {fileID: 1398299228}
+  _characterType: 1
+  pathTilePrefab: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
+    type: 3}
+  _playerFinishedMove: 0
+  _turnStarted: 0
 --- !u!1 &1398299228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1031,6 +1030,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24df23ea923385e4c8e7b79aac677587, type: 3}
+--- !u!1 &1945023589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1945023591}
+  - component: {fileID: 1945023590}
+  m_Layer: 0
+  m_Name: MoveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1945023590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945023589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c10697db7973b4eb012fd7fac62ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 193045026}
+  npcControllers:
+  - {fileID: 910343299}
+  mouseSelection: {fileID: 601506082}
+--- !u!4 &1945023591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945023589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.919527, y: -8.878949, z: -3.252245}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1999080829
 GameObject:
   m_ObjectHideFlags: 0

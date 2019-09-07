@@ -8,13 +8,15 @@ namespace TurnBasedAssets.Scripts.Controllers
 {
     public class Controller : MonoBehaviour, IObjectAvoidanceInitialisable
     {
-        internal IPathfinder Pathfinder;
+        protected IPathfinder Pathfinder;
         private IPosition _position;
         private ObjectAvoidance _avoidance;
-        [SerializeField] internal MouseSelection mouseSelectionScript;
-        [SerializeField] internal GameObject pathFinderTiles;
-        [SerializeField] internal float movementSpeed;
-        [SerializeField] internal float rotationSpeed;
+        [SerializeField] protected MouseSelection mouseSelectionScript;
+
+        //// Moved to CharacterBase
+        //[SerializeField] protected GameObject pathFinderTiles;
+        //[SerializeField] protected float movementSpeed;
+        //[SerializeField] protected float rotationSpeed;
         public Renderer RenderBounds => GetComponent<Renderer>();
 
         public void Start()
