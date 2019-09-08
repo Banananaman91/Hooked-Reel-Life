@@ -3,6 +3,8 @@
     public enum CharacterType
     {
         Player,
-        Npc
+        NPC,
+        PatrollingNPC,
+        StalkingNPC
     }
 }

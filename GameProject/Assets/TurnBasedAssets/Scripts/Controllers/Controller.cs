@@ -12,11 +12,6 @@ namespace TurnBasedAssets.Scripts.Controllers
         private IPosition _position;
         private ObjectAvoidance _avoidance;
         [SerializeField] protected MouseSelection mouseSelectionScript;
-
-        //// Moved to CharacterBase
-        //[SerializeField] protected GameObject pathFinderTiles;
-        //[SerializeField] protected float movementSpeed;
-        //[SerializeField] protected float rotationSpeed;
         public Renderer RenderBounds => GetComponent<Renderer>();
 
         public void Start()

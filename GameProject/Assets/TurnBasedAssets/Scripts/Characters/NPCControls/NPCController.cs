@@ -1,131 +1,129 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TurnBasedAssets.Scripts.Controllers;
+using TurnBasedAssets.Scripts.Characters.PlayerControls;
 using UnityEngine;
 
 namespace TurnBasedAssets.Scripts.Characters.NPCControls
 {
     public class NPCController : CharacterBase
     {
-        private Vector3 _goal;
-        public void NpcMove()
-        {
-            _isMoving = true;
-//            FindGoal();
-            StartCoroutine(FindPath(_goal));
-            StartCoroutine(MoveCharacterAcrossPath());
-            
-        }
+        [SerializeField] private PlayerController _playerController;
+        [SerializeField] private List<GameObject> _NPCGoalPositions;
+        private int currentGoalPositionIndex;
 
-//        private Vector3 FindGoal()
-//        {
-//            var currentPosition = transform.position;
-//            var newX = Random.Range(currentPosition.x, -+10);
-//            var newZ = Random.Range(currentPosition.z, -+10);
-//            return new Vector3(newX, currentPosition.y, newZ);
-//        }
+        private int _numberOfTilesMoved;
 
-        private IEnumerator FindPath(Vector3 goal)
+
+
+        public override IEnumerator VisualisePath()
         {
             ClearVisualisedPath();
+            goalPosition = DetermineGoalPosition();
 
-            yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, goal, false, moveableRadius, newPath => _path = newPath));
+            if (_characterType == CharacterType.StalkingNPC) Debug.Log("begun finding stalker path");
+
+            yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, goalPosition, false, moveableRadius, newPath => _path = newPath));
+
+            if (_characterType == CharacterType.StalkingNPC) Debug.Log("stalker path found");
 
             foreach (var location in _path)
             {
-                if (location == _goal) break;
+                if (location == goalPosition) break;
 
                 var tile = Instantiate(pathTilePrefab, location, Quaternion.identity);
+                tilesInPath++;
                 _visualisedPath.Add(tile);
             }
+
+            StartCoroutine(MoveCharacterAcrossPath());
+
+            yield return null;
         }
 
-        //private IEnumerable<Vector3> _path = new List<Vector3>();
-        //private List<GameObject> _pathVisualised = new List<GameObject>();
-        //private Vector3 _previousLocation;
-        //private Vector3 _previousDistance;
 
-        //public bool pathFound = false;
+        private Vector3 DetermineGoalPosition()
+        {
+            Vector3 determinedPosition;
 
-        //public IEnumerator FindPossibleMovePositions()
-        //{
-        //    ClearTiles();
-        //    yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, _goalDestination.transform.position, false, 10, newPath => _path = newPath));
-        //    pathFound = true;
+            switch (_characterType)
+            {
+                case CharacterType.NPC:
+                    determinedPosition = _NPCGoalPositions[0].transform.position;
+                    break;
 
-        //    foreach (var location in _path)
-        //    {
-        //        if (location == _goalDestination.transform.position) break;
-        //        var tile = Instantiate(pathFinderTiles, location, Quaternion.identity);
-        //        _pathVisualised.Add(tile);
-        //    }
+                case CharacterType.PatrollingNPC:
+                    determinedPosition = _NPCGoalPositions[currentGoalPositionIndex].transform.position;
+                    break;
 
-        //    yield return null;
-        //}
+                case CharacterType.StalkingNPC:
+                    determinedPosition = _playerController.transform.position;
+                    if (_characterType == CharacterType.StalkingNPC) Debug.Log("stalker goal found");
+                    break;
 
+                default:
+                    determinedPosition = Vector3.zero;
+                    break;
+            }
 
-        //public IEnumerator StartNPCMovement()
-        //{
-        //    mouseSelectionScript.enabled = false;
-
-        //    foreach (var location in _path)
-        //    {
-        //        Vector3 locationDistance = location - _previousLocation;
-
-        //        if(locationDistance != _previousDistance)
-        //        {
-        //            yield return StartCoroutine(RotateNPC(location));
-        //        }
-
-        //        while(transform.position != location)
-        //        {
-        //            yield return StartCoroutine(MoveToNextTile(location));
-        //        }
-
-        //        _previousDistance = location - _previousLocation;
-        //        _previousLocation = location;
-        //    }
-
-        //    mouseSelectionScript.enabled = true;
-        //    ClearTiles();
-        //    mouseSelectionScript.Selection.DeSelect();
-
-        //    yield return null;
-        //}
+            return determinedPosition;
+        }
 
 
-        //private IEnumerator MoveToNextTile(Vector3 location)
-        //{
-        //    transform.position = Vector3.MoveTowards(transform.position, location, movementSpeed * Time.deltaTime);
-        //    yield return null;
-        //}
+        public override IEnumerator MoveCharacterAcrossPath()
+        {
+            if (_characterType == CharacterType.StalkingNPC) Debug.Log("stalker moving");
 
+            foreach (var location in _path)
+            {
+                if(_numberOfTilesMoved < _playerController.tilesInPath)
+                {
+                    Vector3 locationDistance = location - _previousLocation;
 
-        //private IEnumerator RotateNPC(Vector3 location)
-        //{
-        //    Vector3 targetDir = location - transform.position;
-        //    Quaternion rotation = Quaternion.LookRotation(targetDir);
+                    if (locationDistance != _previousDistance)
+                    {
+                        yield return StartCoroutine(RotateCharacter(location));
+                    }
 
-        //    do
-        //    {
-        //        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-        //        yield return null;
-        //    } while (transform.rotation != rotation);
+                    while (transform.position != location)
+                    {
+                        yield return StartCoroutine(MoveCharacterToNextTile(location));
+                    }
 
-        //    yield return null;
-        //}
+                    _previousDistance = location - _previousLocation;
+                    _previousLocation = location;
+                }
 
+                _numberOfTilesMoved++;
+            }
 
-        //private void ClearTiles()
-        //{
-        //    foreach (GameObject tile in _pathVisualised)
-        //    {
-        //        Destroy(tile);
-        //    }
+            _numberOfTilesMoved = 0;
 
-        //    _pathVisualised.Clear();
-        //}
+            switch (_characterType)
+            {
+                case CharacterType.NPC:
+                    break;
 
+                // Resets PatrollingNPC goal position loops
+                case CharacterType.PatrollingNPC:
+                    if (transform.position == goalPosition)
+                        if (currentGoalPositionIndex == _NPCGoalPositions.Count - 1)
+                            currentGoalPositionIndex = 0;
+                        else
+                            currentGoalPositionIndex++;
+                    break;
+
+                case CharacterType.StalkingNPC:
+                    break;
+
+                default:
+                    break;
+            }
+
+            ClearVisualisedPath();
+            mouseSelectionScript.enabled = true;
+
+            yield return null;
+        }
     }
 
 }
