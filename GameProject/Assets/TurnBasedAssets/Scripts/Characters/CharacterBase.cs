@@ -14,8 +14,9 @@ namespace TurnBasedAssets.Scripts.Characters
         // Other variables to add here: health, name, etc etc
 
         // Player Type Variables
-        enum CharacterTypes { Player, NPC };
-        [SerializeField] private CharacterTypes _characterType;
+        [SerializeField] protected CharacterType _characterType;
+        
+        public MoveManager ManageMove => _moveManager;
 
         // Path Variables
         [SerializeField] public GameObject npcGoalPosition;
@@ -23,24 +24,24 @@ namespace TurnBasedAssets.Scripts.Characters
 
         protected float moveableRadius;
         [SerializeField] protected GameObject pathTilePrefab;
-        private IEnumerable<Vector3> _path = new List<Vector3>();
-        private List<GameObject> _visualisedPath = new List<GameObject>();
+        protected IEnumerable<Vector3> _path = new List<Vector3>();
+        protected List<GameObject> _visualisedPath = new List<GameObject>();
         private Vector3 _previousLocation, _previousDistance;
 
         [SerializeField] private MoveManager _moveManager;
 
         public bool _playerFinishedMove = false; // public for testing
-        public bool _turnStarted = false; // public for testing
+        public bool _isMoving = false; // public for testing
 
-        //private void Update()
-        //{
-        //    if(!_turnStarted)
-        //    {
-        //        _turnStarted = true;
-        //        MoveManager();
-        //        _turnStarted = false;
-        //    }
-        //}
+//        private void Update()
+//        {
+//            if(!_turnStarted)
+//            {
+//                _turnStarted = true;
+//                MoveManager();
+//                _turnStarted = false;
+//            }
+//        }
 
 
         //private void MoveManager()
@@ -73,8 +74,9 @@ namespace TurnBasedAssets.Scripts.Characters
 
             switch (_characterType)
             {
-                case CharacterTypes.NPC:
+                case CharacterType.Npc:
                     goalPosition = npcGoalPosition.transform.position;
+                    //goalPosition = FindGoal();
                     break;
                 default:
                     break;
@@ -92,7 +94,7 @@ namespace TurnBasedAssets.Scripts.Characters
 
             switch (_characterType)
             {
-                case CharacterTypes.NPC:
+                case CharacterType.Npc:
                     StartCoroutine(MoveCharacterAcrossPath());
                     break;
                 default:
@@ -131,7 +133,7 @@ namespace TurnBasedAssets.Scripts.Characters
             //mouseSelectionScript.Selection.DeSelect(); // moved to MoveManager
 
 
-            if(_characterType == CharacterTypes.Player)
+            if(_characterType == CharacterType.Player)
             {
                 _moveManager.StartCharacterMoves(false);
             }
@@ -162,7 +164,7 @@ namespace TurnBasedAssets.Scripts.Characters
         }
 
 
-        private void ClearVisualisedPath()
+        public void ClearVisualisedPath()
         {
             foreach (GameObject tile in _visualisedPath)
             {
@@ -170,6 +172,14 @@ namespace TurnBasedAssets.Scripts.Characters
             }
 
             _visualisedPath.Clear();
+        }
+        
+        private Vector3 FindGoal()
+        {
+            var currentPosition = transform.position;
+            var newX = Random.Range(currentPosition.x, -+10);
+            var newZ = Random.Range(currentPosition.z, -+10);
+            return new Vector3(newX, currentPosition.y, newZ);
         }
     }
 }

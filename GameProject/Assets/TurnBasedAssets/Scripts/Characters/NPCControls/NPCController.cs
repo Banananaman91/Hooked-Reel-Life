@@ -7,6 +7,39 @@ namespace TurnBasedAssets.Scripts.Characters.NPCControls
 {
     public class NPCController : CharacterBase
     {
+        private Vector3 _goal;
+        public void NpcMove()
+        {
+            _isMoving = true;
+//            FindGoal();
+            StartCoroutine(FindPath(_goal));
+            StartCoroutine(MoveCharacterAcrossPath());
+            
+        }
+
+//        private Vector3 FindGoal()
+//        {
+//            var currentPosition = transform.position;
+//            var newX = Random.Range(currentPosition.x, -+10);
+//            var newZ = Random.Range(currentPosition.z, -+10);
+//            return new Vector3(newX, currentPosition.y, newZ);
+//        }
+
+        private IEnumerator FindPath(Vector3 goal)
+        {
+            ClearVisualisedPath();
+
+            yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, goal, false, moveableRadius, newPath => _path = newPath));
+
+            foreach (var location in _path)
+            {
+                if (location == _goal) break;
+
+                var tile = Instantiate(pathTilePrefab, location, Quaternion.identity);
+                _visualisedPath.Add(tile);
+            }
+        }
+
         //private IEnumerable<Vector3> _path = new List<Vector3>();
         //private List<GameObject> _pathVisualised = new List<GameObject>();
         //private Vector3 _previousLocation;
