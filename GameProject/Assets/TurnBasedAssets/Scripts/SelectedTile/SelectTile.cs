@@ -16,7 +16,9 @@ namespace TurnBasedAssets.Scripts.SelectedTile
         //[SerializeField] private NPCController _npcController;
         [SerializeField] private MouseSelection _mouseSelection;
 
-        public bool confirmedMove;
+        [SerializeField] private MoveManager _moveManager;
+
+        //public bool confirmedMove;
 
         private void Start()
         {
@@ -24,8 +26,11 @@ namespace TurnBasedAssets.Scripts.SelectedTile
             //_npcController = FindObjectOfType<NPCController>();
             _mouseSelection = FindObjectOfType<MouseSelection>();
 
-            confirmedMove = false;
-            StartCoroutine(_playerController.VisualisePath(_mouseSelection.RawGridPoint));
+            _moveManager = FindObjectOfType<MoveManager>();
+
+            //confirmedMove = false;
+            _playerController.goalPosition = _mouseSelection.RawGridPoint;
+            StartCoroutine(_playerController.VisualisePath());
 
             //if(!_npcController.pathFound)
             //    StartCoroutine(_npcController.FindPossibleMovePositions());
@@ -33,7 +38,9 @@ namespace TurnBasedAssets.Scripts.SelectedTile
 
         public void Select()
         {
-            confirmedMove = true;
+            _moveManager.StartCharacterMoves(true);
+
+            //confirmedMove = true;
             //StartCoroutine(_playerController.StartPlayerMovement());
             //StartCoroutine(_npcController.StartNPCMovement());
         }

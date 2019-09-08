@@ -382,8 +382,11 @@ MonoBehaviour:
   movementSpeed: 2
   rotationSpeed: 150
   _characterType: 0
+  npcGoalPosition: {fileID: 0}
+  goalPosition: {x: 0, y: 0, z: 0}
   pathTilePrefab: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
     type: 3}
+  _moveManager: {fileID: 1945023590}
   _playerFinishedMove: 0
   _turnStarted: 0
 --- !u!136 &193045027
@@ -860,8 +863,11 @@ MonoBehaviour:
   movementSpeed: 2
   rotationSpeed: 150
   _characterType: 1
+  npcGoalPosition: {fileID: 1398299228}
+  goalPosition: {x: 0, y: 0, z: 0}
   pathTilePrefab: {fileID: 1283670611669746681, guid: cb0b314c841939d408bdd99ea9e4e6b6,
     type: 3}
+  _moveManager: {fileID: 1945023590}
   _playerFinishedMove: 0
   _turnStarted: 0
 --- !u!1 &1398299228
@@ -1046,7 +1052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1945023590
 MonoBehaviour:
   m_ObjectHideFlags: 0

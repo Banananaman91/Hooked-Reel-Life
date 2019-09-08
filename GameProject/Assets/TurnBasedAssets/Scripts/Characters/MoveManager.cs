@@ -12,16 +12,26 @@ namespace TurnBasedAssets.Scripts.Characters
         [SerializeField] private PlayerController playerController;
         [SerializeField] private List<NPCController> npcControllers;
         [SerializeField] private MouseSelection mouseSelection;
-        // create enums
 
         public void StartCharacterMoves(bool isPlayersTurn)
         {
             switch (isPlayersTurn)
             {
                 case true:
-                    //makes MouseSelection usuable, in turn making player controls available.
-                    //StartCoroutine(playerController.FindPossibleMovePositions(mouseSelection.RawGridPoint)); // at the end of players movement, switch enum on Controller to NPC moving
+                    StartCoroutine(playerController.MoveCharacterAcrossPath()); // at the end of players movement, switch enum on Controller to NPC moving
                     break;
+
+                case false:
+                    foreach (NPCController NPC in npcControllers)
+                    {
+                        StartCoroutine(NPC.VisualisePath());
+                        //StartCoroutine(NPC.MoveCharacterAcrossPath());
+                    }
+                    mouseSelection.Selection.DeSelect();
+                    break;
+
+
+
 
                 default: //case NPC moving, start coroutine for npcs to start finding possible move positions, which ends starting movement
                     break;

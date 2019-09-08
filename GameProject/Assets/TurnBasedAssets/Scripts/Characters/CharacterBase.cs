@@ -18,53 +18,67 @@ namespace TurnBasedAssets.Scripts.Characters
         [SerializeField] private CharacterTypes _characterType;
 
         // Path Variables
+        [SerializeField] public GameObject npcGoalPosition;
+        public Vector3 goalPosition;
+
         protected float moveableRadius;
         [SerializeField] protected GameObject pathTilePrefab;
         private IEnumerable<Vector3> _path = new List<Vector3>();
         private List<GameObject> _visualisedPath = new List<GameObject>();
         private Vector3 _previousLocation, _previousDistance;
 
+        [SerializeField] private MoveManager _moveManager;
+
         public bool _playerFinishedMove = false; // public for testing
         public bool _turnStarted = false; // public for testing
 
-        private void Update()
-        {
-            if(!_turnStarted)
-            {
-                _turnStarted = true;
-                MoveManager();
-                _turnStarted = false;
-            }
-        }
+        //private void Update()
+        //{
+        //    if(!_turnStarted)
+        //    {
+        //        _turnStarted = true;
+        //        MoveManager();
+        //        _turnStarted = false;
+        //    }
+        //}
 
 
-        private void MoveManager()
-        {
-            if (FindObjectOfType<SelectTile>() != null)
-            {
-                if(FindObjectOfType<SelectTile>().confirmedMove)
-                {
-                    switch (_characterType)
-                    {
-                        case CharacterTypes.Player:
-                            _playerFinishedMove = false;
-                            StartCoroutine(MoveCharacterAcrossPath());
-                            break;
-                        case CharacterTypes.NPC:
-                            if (_playerFinishedMove)
-                                StartCoroutine(MoveCharacterAcrossPath());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
+        //private void MoveManager()
+        //{
+        //    if (FindObjectOfType<SelectTile>() != null)
+        //    {
+        //        if(FindObjectOfType<SelectTile>().confirmedMove)
+        //        {
+        //            switch (_characterType)
+        //            {
+        //                case CharacterTypes.Player:
+        //                    _playerFinishedMove = false;
+        //                    StartCoroutine(MoveCharacterAcrossPath());
+        //                    break;
+        //                case CharacterTypes.NPC:
+        //                    if (_playerFinishedMove)
+        //                        StartCoroutine(MoveCharacterAcrossPath());
+        //                    break;
+        //                default:
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
 
 
-        public IEnumerator VisualisePath(Vector3 goalPosition)
+        public IEnumerator VisualisePath()
         {
             ClearVisualisedPath();
+
+            switch (_characterType)
+            {
+                case CharacterTypes.NPC:
+                    goalPosition = npcGoalPosition.transform.position;
+                    break;
+                default:
+                    break;
+            }
 
             yield return StartCoroutine(routine: Pathfinder.FindPath(transform.position, goalPosition, false, moveableRadius, newPath => _path = newPath));
 
@@ -76,11 +90,20 @@ namespace TurnBasedAssets.Scripts.Characters
                 _visualisedPath.Add(tile);
             }
 
+            switch (_characterType)
+            {
+                case CharacterTypes.NPC:
+                    StartCoroutine(MoveCharacterAcrossPath());
+                    break;
+                default:
+                    break;
+            }
+
             yield return null;
         }
 
 
-        private IEnumerator MoveCharacterAcrossPath()
+        public IEnumerator MoveCharacterAcrossPath()
         {
             mouseSelectionScript.enabled = false;
 
@@ -105,7 +128,13 @@ namespace TurnBasedAssets.Scripts.Characters
             _playerFinishedMove = true;
             mouseSelectionScript.enabled = true;
             ClearVisualisedPath();
-            mouseSelectionScript.Selection.DeSelect();
+            //mouseSelectionScript.Selection.DeSelect(); // moved to MoveManager
+
+
+            if(_characterType == CharacterTypes.Player)
+            {
+                _moveManager.StartCharacterMoves(false);
+            }
 
             yield return null;
         }
