@@ -20,13 +20,13 @@ MonoBehaviour:
     - _next: 1
       _reply: Hello!
     - _next: 2
-      _reply: Fuck you
+      _reply: I'm not interested
   - _messageText: How are you?
-    _npcMood: Happy
+    _npcMood: happy
     _responses:
     - _next: 2
-      _reply: Get fucked
-  - _messageText: Well fuck you too
+      _reply: '**stare**'
+  - _messageText: Well you're just rude
     _npcMood: angry
     _responses:
     - _next: -1

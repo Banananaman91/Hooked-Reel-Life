@@ -27,7 +27,7 @@ MonoBehaviour:
     - _next: 2
       _reply: What can I do?
     - _next: -1
-      _reply: Tough shit
+      _reply: Tough
   - _messageText: I need you to go kill that other cube for me
     _npcMood: angry
     _responses:
